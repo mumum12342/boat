@@ -1,0 +1,551 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>档案搜索 - 叠滘龙船文化口述史档案库</title>
+    <script src="https://cdn.tailwindcss.com"></script>
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+    <style>
+        :root {
+            --color-red-primary: #B91C1C;
+            --color-gold: #D4AF37;
+        }
+
+        body {
+            font-family: 'Microsoft YaHei', 'PingFang SC', sans-serif;
+        }
+
+        .pattern-bg {
+            background-image:
+                radial-gradient(circle at 25% 25%, rgba(212, 175, 55, 0.1) 0%, transparent 50%),
+                radial-gradient(circle at 75% 75%, rgba(185, 28, 28, 0.05) 0%, transparent 50%);
+        }
+
+        .gold-text {
+            background: linear-gradient(135deg, #D4AF37 0%, #F5DEB3 50%, #D4AF37 100%);
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+            background-clip: text;
+        }
+
+        .card-hover:hover {
+            transform: translateY(-4px);
+            box-shadow: 0 20px 40px rgba(185, 28, 28, 0.15);
+        }
+
+        .nav-link.active {
+            color: #D4AF37;
+            border-bottom: 2px solid #D4AF37;
+        }
+
+        /* 搜索框样式 */
+        .search-input:focus {
+            box-shadow: 0 0 0 3px rgba(185, 28, 28, 0.2);
+        }
+
+        /* 动画效果 */
+        @keyframes fadeIn {
+            from { opacity: 0; transform: translateY(10px); }
+            to { opacity: 1; transform: translateY(0); }
+        }
+
+        .animate-card {
+            animation: fadeIn 0.3s ease-out forwards;
+        }
+
+        @keyframes pulse {
+            0%, 100% { transform: scale(1); }
+            50% { transform: scale(1.05); }
+        }
+
+        .search-icon-animate {
+            animation: pulse 2s ease-in-out infinite;
+        }
+            /* 口述史档案卷宗 */
+        #recentArchives {
+            display: block !important;
+        }
+
+        .archive-record {
+            display: grid;
+            grid-template-columns: 5rem minmax(0, 1fr) 7.5rem;
+            gap: 1.25rem;
+            align-items: stretch;
+            position: relative;
+            padding: 1.5rem 0;
+            color: var(--ink, #1F1D1A);
+            text-decoration: none;
+            border-top: 1px solid rgba(31, 29, 26, 0.22);
+            border-bottom: 1px solid rgba(31, 29, 26, 0.12);
+            transition: padding-left 360ms ease, border-color 360ms ease, background-color 360ms ease;
+        }
+
+        .archive-record + .archive-record {
+            border-top: 0;
+        }
+
+        .archive-record:hover {
+            padding-left: 0.75rem;
+            background: rgba(255, 255, 255, 0.22);
+            border-color: rgba(166, 61, 50, 0.55);
+        }
+
+        .archive-record::before {
+            content: '';
+            position: absolute;
+            left: 0;
+            top: 1.5rem;
+            bottom: 1.5rem;
+            width: 2px;
+            background: #A63D32;
+            transform: scaleY(0.18);
+            transform-origin: center;
+            transition: transform 360ms ease;
+        }
+
+        .archive-record:hover::before { transform: scaleY(1); }
+
+        .archive-record-index {
+            display: flex;
+            flex-direction: column;
+            justify-content: space-between;
+            gap: 0.5rem;
+            padding-left: 0.8rem;
+            border-right: 1px solid rgba(166, 61, 50, 0.35);
+        }
+
+        .archive-record-label {
+            color: #A63D32 !important;
+            font-size: 0.7rem;
+            letter-spacing: 0.18em;
+            white-space: nowrap;
+        }
+
+        .archive-record-index strong {
+            color: #1F1D1A;
+            font-family: Georgia, 'Times New Roman', serif;
+            font-size: 1.35rem;
+            font-weight: 400;
+            letter-spacing: 0.04em;
+        }
+
+        .archive-record-body { min-width: 0; }
+
+        .archive-record-meta {
+            display: flex;
+            flex-wrap: wrap;
+            gap: 0.75rem 1.25rem;
+            margin-bottom: 0.45rem;
+            color: #777067;
+            font-size: 0.75rem;
+            letter-spacing: 0.08em;
+        }
+
+        .archive-record-meta span:first-child { color: #A63D32; }
+
+        .archive-record-title {
+            margin: 0 0 0.45rem;
+            color: #1F1D1A !important;
+            font-family: 'STKaiti', 'KaiTi', 'FZKai-Z03', '华文楷体', serif !important;
+            font-size: 1.35rem !important;
+            font-weight: 400 !important;
+            line-height: 1.5 !important;
+            letter-spacing: 0.08em;
+            transition: color 260ms ease;
+        }
+
+        .archive-record:hover .archive-record-title { color: #7E2F29 !important; }
+
+        .archive-record-person {
+            margin: 0 0 0.45rem;
+            color: #4B4740 !important;
+            font-size: 0.86rem;
+        }
+
+        .archive-record-summary {
+            display: -webkit-box;
+            overflow: hidden;
+            margin: 0;
+            color: #777067 !important;
+            font-size: 0.88rem;
+            line-height: 1.8 !important;
+            -webkit-box-orient: vertical;
+            -webkit-line-clamp: 2;
+        }
+
+        .archive-record-link {
+            display: inline-block;
+            margin-top: 0.8rem;
+            color: #A63D32;
+            font-size: 0.78rem;
+            letter-spacing: 0.12em;
+            opacity: 0.72;
+            transition: opacity 260ms ease, letter-spacing 260ms ease;
+        }
+
+        .archive-record:hover .archive-record-link {
+            opacity: 1;
+            letter-spacing: 0.2em;
+        }
+
+        .archive-record-thumb {
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            min-height: 7rem;
+            overflow: hidden;
+            background: #E8DFCF;
+            border-left: 1px solid rgba(166, 61, 50, 0.35);
+        }
+
+        .archive-record-thumb img {
+            width: 100%;
+            height: 100%;
+            min-height: 7rem;
+            object-fit: cover;
+            filter: grayscale(18%) sepia(12%) saturate(0.82);
+            transition: transform 600ms ease, filter 600ms ease;
+        }
+
+        .archive-record:hover .archive-record-thumb img {
+            transform: scale(1.06);
+            filter: grayscale(0%) sepia(8%) saturate(0.95);
+        }
+
+        .archive-placeholder {
+            position: relative;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            width: 100%;
+            height: 100%;
+            min-height: 7rem;
+            overflow: hidden;
+            background:
+                linear-gradient(165deg, transparent 0 47%, rgba(166, 61, 50, 0.14) 48% 49%, transparent 50% 100%),
+                #E8DFCF;
+        }
+
+        .archive-placeholder::before,
+        .archive-placeholder::after {
+            content: '';
+            position: absolute;
+            left: -10%;
+            width: 120%;
+            height: 1px;
+            background: rgba(166, 61, 50, 0.35);
+            transform: rotate(-7deg);
+        }
+
+        .archive-placeholder::before { top: 35%; }
+        .archive-placeholder::after { top: 62%; opacity: 0.65; }
+
+        .archive-placeholder i {
+            position: relative;
+            z-index: 1;
+            color: #7E2F29;
+            font-size: 1.9rem;
+            opacity: 0.82;
+            transform: rotate(-6deg);
+        }
+
+        .archive-placeholder-seal {
+            position: absolute;
+            top: 0.9rem;
+            right: 0.9rem;
+            width: 1.15rem;
+            height: 1.15rem;
+            border: 1px solid rgba(166, 61, 50, 0.75);
+            box-shadow: inset 0 0 0 2px rgba(232, 223, 207, 0.85);
+            transform: rotate(8deg);
+        }
+
+        .archive-placeholder-wave {
+            position: absolute;
+            left: 14%;
+            right: 14%;
+            bottom: 1.05rem;
+            height: 0.35rem;
+            border-top: 1px solid rgba(31, 29, 26, 0.3);
+            border-radius: 50%;
+            transform: skewX(-28deg);
+        }
+
+        .archive-record:hover .archive-placeholder {
+            background-color: #E1D4C0;
+        }
+        .archive-record-thumb i {
+            color: #A63D32;
+            font-size: 2rem;
+            opacity: 0.65;
+        }
+
+        @media (max-width: 640px) {
+            .archive-record {
+                grid-template-columns: 3.8rem minmax(0, 1fr);
+                gap: 0.8rem;
+            }
+
+            .archive-record-thumb { display: none; }
+            .archive-record-index { padding-left: 0.55rem; }
+            .archive-record-title { font-size: 1.15rem !important; }
+            .archive-record-summary { font-size: 0.82rem; }
+        }
+        /* 搜索页水墨长卷视觉 */
+        :root { --paper:#F4EFE3; --paper-light:#FBF8F0; --paper-deep:#E8DFCF; --cinnabar:#A63D32; --cinnabar-dark:#7E2F29; --ink:#1F1D1A; --ink-soft:#4B4740; }
+        body { background:var(--paper) !important; color:var(--ink); font-family:'SimSun','Songti SC','STSong',serif !important; background-image:linear-gradient(rgba(31,29,26,.025) 1px,transparent 1px),linear-gradient(90deg,rgba(31,29,26,.018) 1px,transparent 1px) !important; background-size:7px 7px,11px 11px; }
+        nav { background:rgba(251,248,240,.95) !important; border-bottom:1px solid rgba(166,61,50,.5); box-shadow:none !important; backdrop-filter:blur(10px); } nav .fa-ship{color:var(--cinnabar)!important;} nav span{color:var(--ink)!important;font-family:'STKaiti','KaiTi','FZKai-Z03','华文楷体',serif!important;letter-spacing:.12em;} nav .nav-link{color:var(--ink-soft)!important;position:relative;} nav .nav-link.active{color:var(--cinnabar-dark)!important;border-bottom:0!important;} nav .nav-link::after{content:'';position:absolute;left:0;right:0;bottom:0;height:1px;background:var(--cinnabar);transform:scaleX(0);transform-origin:left;transition:transform 260ms ease;} nav .nav-link:hover::after,nav .nav-link.active::after{transform:scaleX(1);} nav #menuBtn{color:var(--ink)!important;} nav .mobile-menu{border-top:1px solid rgba(166,61,50,.2);} nav .mobile-menu a{color:var(--ink-soft)!important;border-bottom:1px solid rgba(31,29,26,.12);}
+        main > .max-w-6xl > .text-center { text-align:left !important; border-top:1px solid rgba(166,61,50,.5); border-bottom:1px solid rgba(31,29,26,.18); padding:1.5rem 0 1.25rem; } main h1{font-family:'STKaiti','KaiTi','FZKai-Z03','华文楷体',serif!important;color:var(--cinnabar-dark)!important;letter-spacing:.1em;} main .gold-text{background:none!important;color:var(--cinnabar-dark)!important;-webkit-text-fill-color:currentColor!important;} main > .max-w-6xl > .text-center p{color:var(--ink-soft)!important;line-height:2;}
+        main > .max-w-6xl > div:nth-child(2) { background:transparent!important; border-top:1px solid rgba(31,29,26,.2); border-bottom:1px solid rgba(31,29,26,.16); border-radius:0!important; box-shadow:none!important; padding:1.2rem 0!important; } .search-input{border:0!important;border-bottom:1px solid rgba(31,29,26,.35)!important;border-radius:0!important;background:transparent!important;box-shadow:none!important;color:var(--ink)!important;padding-left:0!important;} .search-input:focus{border-color:var(--cinnabar)!important;box-shadow:0 2px 0 rgba(166,61,50,.18)!important;} .search-input::placeholder{color:var(--ink-soft);}.search-icon-animate{color:var(--cinnabar)!important;left:0!important;animation:none!important;} #searchBtn,#resetBtn{border-radius:0!important;box-shadow:none!important;background:transparent!important;color:var(--cinnabar-dark)!important;border:1px solid var(--cinnabar)!important;} #searchBtn:hover,#resetBtn:hover{background:var(--cinnabar)!important;color:var(--paper-light)!important;}
+        #resultStats{color:var(--ink-soft)!important;border-bottom:1px solid rgba(31,29,26,.14);padding-bottom:.8rem;} #emptyState{border-top:1px solid rgba(31,29,26,.16);border-bottom:1px solid rgba(31,29,26,.16);background:transparent!important;} footer{background:var(--ink)!important;border-top:4px solid var(--cinnabar);} footer h4,footer span{font-family:'STKaiti','KaiTi','FZKai-Z03','华文楷体',serif;} footer p,footer li,footer a{color:rgba(244,239,227,.7)!important;}</style>
+</head>
+<body class="bg-stone-50 pattern-bg min-h-screen">
+    <!-- 固定导航栏 -->
+    <nav class="fixed top-0 left-0 right-0 z-50">
+        <div class="max-w-6xl mx-auto px-4">
+            <div class="flex items-center justify-between h-16">
+                <!-- Logo -->
+                <div class="flex items-center">
+                    <i class="fas fa-ship text-2xl text-amber-400 mr-2"></i>
+                    <span class="text-xl font-bold text-white">叠滘龙船文化</span>
+                </div>
+
+                <!-- 桌面端导航 -->
+                <div class="hidden md:flex items-center space-x-8">
+                    <a href="index.html" class="nav-link text-white hover:text-amber-300 transition-colors py-2">首页</a>
+                    <a href="search.html" class="nav-link active text-white hover:text-amber-300 transition-colors py-2">档案搜索</a>
+                    <a href="achievements.html" class="nav-link text-white hover:text-amber-300 transition-colors py-2">成果与足迹</a>
+                </div>
+
+                <!-- 移动端汉堡菜单 -->
+                <button id="menuBtn" class="md:hidden text-white text-2xl">
+                    <i class="fas fa-bars"></i>
+                </button>
+            </div>
+
+            <!-- 移动端菜单 -->
+            <div id="mobileMenu" class="mobile-menu md:hidden pb-4">
+                <a href="index.html" class="block py-2 text-white hover:text-amber-300">首页</a>
+                <a href="search.html" class="block py-2 text-white hover:text-amber-300">档案搜索</a>
+                <a href="achievements.html" class="block py-2 text-white hover:text-amber-300">成果与足迹</a>
+            </div>
+        </div>
+    </nav>
+
+    <!-- 主内容区 -->
+    <main class="pt-24 pb-16 px-4">
+        <div class="max-w-6xl mx-auto">
+            <!-- 页面标题 -->
+            <div class="text-center mb-8">
+                <h1 class="text-3xl md:text-4xl font-bold mb-4">
+                    <span class="gold-text">档案搜索</span>
+                </h1>
+                <p class="text-gray-600">搜索口述史档案，传承龙船文化</p>
+            </div>
+
+            <!-- 搜索框 -->
+            <div class="bg-white rounded-2xl shadow-xl p-6 mb-10">
+                <div class="flex flex-col md:flex-row gap-4">
+                    <!-- 搜索输入框 -->
+                    <div class="flex-1 relative">
+                        <i class="fas fa-search search-icon-animate absolute left-4 top-1/2 -translate-y-1/2 text-red-600"></i>
+                        <input
+                            type="text"
+                            id="searchInput"
+                            placeholder="输入编号、标题、身份、地点或正文关键词..."
+                            class="search-input w-full pl-12 pr-4 py-4 text-lg border-2 border-gray-200 rounded-xl focus:border-red-600 focus:outline-none transition-all"
+                        >
+                    </div>
+                    <!-- 搜索按钮 -->
+                    <button
+                        id="searchBtn"
+                        class="px-8 py-4 bg-gradient-to-r from-red-700 to-red-800 text-white font-bold rounded-xl hover:from-red-800 hover:to-red-900 transition-all shadow-lg hover:shadow-xl flex items-center justify-center gap-2"
+                    >
+                        <i class="fas fa-search"></i>
+                        <span>搜索</span>
+                    </button>
+                    <!-- 重置按钮 -->
+                    <button
+                        id="resetBtn"
+                        class="px-6 py-4 bg-gray-100 text-gray-700 font-medium rounded-xl hover:bg-gray-200 transition-all flex items-center justify-center gap-2"
+                    >
+                        <i class="fas fa-redo"></i>
+                        <span>重置</span>
+                    </button>
+                </div>
+
+                <!-- 搜索提示 -->
+                <div class="mt-4 text-sm text-gray-500 flex items-center gap-4">
+                    <span><i class="fas fa-lightbulb text-amber-500 mr-1"></i> 提示：支持编号、标题、身份、类别、地点和正文关键词模糊匹配</span>
+                </div>
+            </div>
+
+            <!-- 搜索结果统计 -->
+            <div id="resultStats" class="mb-6 text-gray-600">
+                <!-- 由JS动态填充 -->
+            </div>
+
+            <!-- 档案卡片列表 -->
+            <div id="archivesContainer" class="grid md:grid-cols-2 lg:grid-cols-3 gap-6">
+                <!-- 由JS动态填充 -->
+            </div>
+
+            <!-- 空状态提示 -->
+            <div id="emptyState" class="hidden text-center py-16">
+                <div class="w-24 h-24 bg-gray-100 rounded-full flex items-center justify-center mx-auto mb-6">
+                    <i class="fas fa-search text-4xl text-gray-400"></i>
+                </div>
+                <h3 class="text-xl font-bold text-gray-600 mb-2">未找到匹配的档案</h3>
+                <p class="text-gray-500 mb-6">请尝试更换关键词或添加新的档案</p>
+                <a href="admin.html" class="inline-flex items-center gap-2 px-6 py-3 bg-gradient-to-r from-red-700 to-red-800 text-white font-medium rounded-xl hover:from-red-800 hover:to-red-900 transition-all">
+                    <i class="fas fa-plus"></i>
+                    添加新档案
+                </a>
+            </div>
+        </div>
+    </main>
+
+    <!-- 页脚 -->
+    <footer class="bg-gradient-to-r from-red-900 via-red-800 to-red-900 text-white py-8 px-4">
+        <div class="max-w-6xl mx-auto text-center">
+            <div class="flex items-center justify-center gap-2 mb-4">
+                <i class="fas fa-ship text-amber-400"></i>
+                <span class="text-lg font-bold">叠滘龙船文化口述史档案库</span>
+            </div>
+            <p class="text-red-200 text-sm">
+                © 2024 叠滘龙船文化口述史档案库 版权所有 · 传承非遗 · 守护文化
+            </p>
+        </div>
+    </footer>
+
+    <!-- JS脚本 -->
+    <script src="interviews-data.js"></script>
+    <script src="data.js"></script>
+    <script>
+        // 页面加载完成后执行
+        document.addEventListener('DOMContentLoaded', function() {
+            // 移动端菜单切换
+            const menuBtn = document.getElementById('menuBtn');
+            const mobileMenu = document.getElementById('mobileMenu');
+
+            menuBtn.addEventListener('click', function() {
+                mobileMenu.classList.toggle('show');
+                const icon = menuBtn.querySelector('i');
+                icon.classList.toggle('fa-bars');
+                icon.classList.toggle('fa-times');
+            });
+
+            // 获取DOM元素
+            const searchInput = document.getElementById('searchInput');
+            const searchBtn = document.getElementById('searchBtn');
+            const resetBtn = document.getElementById('resetBtn');
+            const archivesContainer = document.getElementById('archivesContainer');
+            const resultStats = document.getElementById('resultStats');
+            const emptyState = document.getElementById('emptyState');
+            const urlParams = new URLSearchParams(window.location.search);
+            const selectedRole = urlParams.get('role') || '';
+
+            // 初始化显示全部档案或指定身份类别
+            loadArchives('');
+
+            // 搜索按钮点击事件
+            searchBtn.addEventListener('click', function() {
+                const keyword = searchInput.value.trim();
+                loadArchives(keyword);
+            });
+
+            // 重置按钮点击事件
+            resetBtn.addEventListener('click', function() {
+                searchInput.value = '';
+                loadArchives('');
+            });
+
+            // 输入框回车搜索
+            searchInput.addEventListener('keypress', function(e) {
+                if (e.key === 'Enter') {
+                    const keyword = searchInput.value.trim();
+                    loadArchives(keyword);
+                }
+            });
+
+            // 输入时实时搜索（防抖）
+            let debounceTimer;
+            searchInput.addEventListener('input', function() {
+                clearTimeout(debounceTimer);
+                debounceTimer = setTimeout(() => {
+                    const keyword = searchInput.value.trim();
+                    loadArchives(keyword);
+                }, 300);
+            });
+
+            /**
+             * 加载档案列表
+             * @param {string} keyword - 搜索关键词
+             */
+            function loadArchives(keyword) {
+                const archives = searchArchives(keyword).filter(archive =>
+                    !selectedRole || archive.role === selectedRole
+                );
+
+                // 更新统计信息
+                const safeRole = escapeHtml(selectedRole);
+                const safeKeyword = escapeHtml(keyword);
+                if (selectedRole && keyword) {
+                    resultStats.innerHTML = `
+                        <div class="flex items-center gap-2">
+                            <i class="fas fa-filter text-red-600"></i>
+                            <span>“<strong class="text-red-700">${safeRole}</strong>”类别中，关键词“<strong class="text-red-700">${safeKeyword}</strong>”共找到 <strong class="text-red-700">${archives.length}</strong> 条结果</span>
+                        </div>
+                    `;
+                } else if (selectedRole) {
+                    resultStats.innerHTML = `
+                        <div class="flex items-center gap-2">
+                            <i class="fas fa-filter text-red-600"></i>
+                            <span>身份类别“<strong class="text-red-700">${safeRole}</strong>”，共 <strong class="text-red-700">${archives.length}</strong> 条档案</span>
+                        </div>
+                    `;
+                } else if (keyword) {
+                    resultStats.innerHTML = `
+                        <div class="flex items-center gap-2">
+                            <i class="fas fa-search text-red-600"></i>
+                            <span>关键词“<strong class="text-red-700">${safeKeyword}</strong>”共找到 <strong class="text-red-700">${archives.length}</strong> 条结果</span>
+                        </div>
+                    `;
+                } else {
+                    resultStats.innerHTML = `
+                        <div class="flex items-center gap-2">
+                            <i class="fas fa-archive text-red-600"></i>
+                            <span>全部档案，共 <strong class="text-red-700">${archives.length}</strong> 条</span>
+                        </div>
+                    `;
+                }
+
+                // 渲染卡片
+                if (archives.length === 0) {
+                    archivesContainer.innerHTML = '';
+                    emptyState.classList.remove('hidden');
+                } else {
+                    emptyState.classList.add('hidden');
+                    archivesContainer.innerHTML = archives.map((archive, index) => `
+                        <div class="animate-card" style="animation-delay: ${index * 0.1}s">
+                            ${generateArchiveCard(archive)}
+                        </div>
+                    `).join('');
+                }
+            }
+
+            /**
+             * HTML转义，防止XSS
+             * @param {string} text - 原始文本
+             * @returns {string} 转义后的文本
+             */
+            function escapeHtml(text) {
+                const div = document.createElement('div');
+                div.textContent = text;
+                return div.innerHTML;
+            }
+        });
+    </script>
+</body>
+</html>

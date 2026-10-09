@@ -1,0 +1,593 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>成果与足迹 - 叠滘龙船文化口述史档案库</title>
+    <script src="https://cdn.tailwindcss.com"></script>
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+    <style>
+        :root {
+            --paper: #F4EFE3;
+            --paper-light: #FBF8F0;
+            --paper-deep: #E8DFCF;
+            --cinnabar: #A63D32;
+            --cinnabar-dark: #7E2F29;
+            --ink: #1F1D1A;
+            --ink-soft: #4B4740;
+            --ink-faint: #777067;
+        }
+
+        html { scroll-behavior: smooth; }
+
+        body {
+            margin: 0;
+            background: var(--paper);
+            color: var(--ink);
+            font-family: 'SimSun', 'Songti SC', 'STSong', serif;
+            background-image:
+                linear-gradient(rgba(31, 29, 26, 0.025) 1px, transparent 1px),
+                linear-gradient(90deg, rgba(31, 29, 26, 0.018) 1px, transparent 1px);
+            background-size: 7px 7px, 11px 11px;
+        }
+
+        .site-header {
+            background: rgba(251, 248, 240, 0.95);
+            border-bottom: 1px solid rgba(166, 61, 50, 0.5);
+            backdrop-filter: blur(10px);
+        }
+
+        .nav-link {
+            position: relative;
+            color: var(--ink-soft);
+            letter-spacing: 0.12em;
+            transition: color 260ms ease;
+        }
+        .nav-link::after {
+            content: '';
+            position: absolute;
+            left: 0; right: 0; bottom: 0;
+            height: 1px;
+            background: var(--cinnabar);
+            transform: scaleX(0);
+            transform-origin: left;
+            transition: transform 260ms ease;
+        }
+        .nav-link:hover, .nav-link.active { color: var(--cinnabar-dark); }
+        .nav-link:hover::after, .nav-link.active::after { transform: scaleX(1); }
+
+        .brand-name, h1, h2, h3 {
+            font-family: 'STKaiti', 'KaiTi', 'FZKai-Z03', '华文楷体', serif;
+            letter-spacing: 0.08em;
+        }
+        .brand-name { color: var(--ink); letter-spacing: 0.12em; }
+
+        .page-shell { max-width: 1200px; margin: 0 auto; padding: 7rem 1.5rem 5rem; }
+
+        .eyebrow { color: var(--cinnabar); font-size: 0.78rem; letter-spacing: 0.28em; }
+
+        .page-hero {
+            border-top: 1px solid rgba(166, 61, 50, 0.5);
+            border-bottom: 1px solid rgba(31, 29, 26, 0.2);
+            padding: 2rem 0;
+        }
+        .page-hero h1 {
+            font-size: clamp(2.4rem, 5vw, 4.2rem);
+            line-height: 1.2;
+            color: var(--cinnabar-dark);
+            letter-spacing: 0.12em;
+            margin: 0.5rem 0;
+        }
+        .page-hero p {
+            max-width: 42rem;
+            color: var(--ink-soft);
+            font-size: 1.05rem;
+            line-height: 2;
+        }
+
+        /* 分类标签导航 */
+        .anchor-nav {
+            display: flex;
+            flex-wrap: wrap;
+            gap: 0.6rem;
+            margin: 2rem 0 0;
+            padding-bottom: 1rem;
+            border-bottom: 1px solid rgba(31, 29, 26, 0.18);
+        }
+        .anchor-nav a {
+            display: inline-flex;
+            align-items: center;
+            gap: 0.4rem;
+            padding: 0.4rem 0.9rem;
+            border: 1px solid rgba(166, 61, 50, 0.45);
+            color: var(--cinnabar-dark);
+            font-size: 0.85rem;
+            letter-spacing: 0.1em;
+            text-decoration: none;
+            transition: background 240ms ease, color 240ms ease;
+        }
+        .anchor-nav a:hover {
+            background: var(--cinnabar);
+            color: var(--paper-light);
+        }
+
+        /* 板块 */
+        .ach-section {
+            padding: 4rem 0;
+            border-bottom: 1px solid rgba(31, 29, 26, 0.15);
+        }
+        .ach-section:last-of-type { border-bottom: 0; }
+
+        .ach-section-head {
+            margin-bottom: 2rem;
+            padding-bottom: 1rem;
+            border-bottom: 1px solid rgba(166, 61, 50, 0.45);
+        }
+        .ach-section-head h2 {
+            font-size: clamp(1.6rem, 3vw, 2.2rem);
+            margin: 0.4rem 0 0.6rem;
+        }
+        .ach-section-head p {
+            color: var(--ink-soft);
+            line-height: 1.9;
+            max-width: 46rem;
+        }
+
+        /* 卡片 */
+        .ach-grid {
+            display: grid;
+            gap: 1.25rem;
+        }
+        .ach-grid.cols-2 { grid-template-columns: repeat(2, 1fr); }
+        .ach-grid.cols-3 { grid-template-columns: repeat(3, 1fr); }
+
+        .ach-card {
+            position: relative;
+            display: flex;
+            flex-direction: column;
+            background: var(--paper-light);
+            border: 1px solid rgba(31, 29, 26, 0.18);
+            overflow: hidden;
+            transition: border-color 260ms ease, transform 260ms ease, box-shadow 260ms ease;
+            cursor: zoom-in;
+        }
+        .ach-card:hover {
+            border-color: var(--cinnabar);
+            transform: translateY(-3px);
+            box-shadow: 0 12px 28px rgba(166, 61, 50, 0.12);
+        }
+        .ach-card .thumb {
+            position: relative;
+            overflow: hidden;
+            background: var(--paper-deep);
+            display: flex;
+            align-items: center;
+            justify-content: center;
+        }
+        .ach-card .thumb img {
+            display: block;
+            width: 100%;
+            height: 100%;
+            object-fit: cover;
+            transition: transform 500ms ease, filter 500ms ease;
+            filter: grayscale(12%) sepia(8%) saturate(0.9);
+        }
+        .ach-card:hover .thumb img {
+            transform: scale(1.04);
+            filter: grayscale(0%) sepia(4%) saturate(1);
+        }
+        .ach-card .thumb.contain img { object-fit: contain; padding: 0.5rem; }
+
+        .ach-card .thumb.cert { height: 16rem; }
+        .ach-card .thumb.photo { height: 13rem; }
+        .ach-card .thumb.social { height: 20rem; background: #fff; }
+        .ach-card .thumb.social img { object-fit: contain; padding: 0.5rem; }
+
+        .ach-card .meta {
+            padding: 0.9rem 1rem 1.1rem;
+            border-top: 1px solid rgba(31, 29, 26, 0.12);
+            background: var(--paper-light);
+        }
+        .ach-card .meta .tag {
+            display: inline-block;
+            color: var(--cinnabar);
+            font-size: 0.7rem;
+            letter-spacing: 0.18em;
+            margin-bottom: 0.35rem;
+        }
+        .ach-card .meta h3 {
+            margin: 0 0 0.35rem;
+            font-size: 1.1rem;
+            color: var(--ink);
+            line-height: 1.4;
+        }
+        .ach-card .meta p {
+            margin: 0;
+            color: var(--ink-faint);
+            font-size: 0.82rem;
+            line-height: 1.7;
+        }
+
+        /* 图片放大提示 */
+        .ach-card::after {
+            content: '\f00e';
+            font-family: 'Font Awesome 6 Free';
+            font-weight: 900;
+            position: absolute;
+            top: 0.7rem;
+            right: 0.7rem;
+            width: 1.9rem;
+            height: 1.9rem;
+            display: grid;
+            place-items: center;
+            color: var(--paper-light);
+            background: rgba(31, 29, 26, 0.55);
+            border-radius: 50%;
+            font-size: 0.75rem;
+            opacity: 0;
+            transition: opacity 240ms ease;
+            pointer-events: none;
+        }
+        .ach-card:hover::after { opacity: 1; }
+
+        /* 弹窗 */
+        .modal {
+            display: none;
+            position: fixed;
+            inset: 0;
+            background: rgba(31, 29, 26, 0.72);
+            backdrop-filter: blur(6px);
+            z-index: 100;
+            align-items: center;
+            justify-content: center;
+            padding: 1rem;
+        }
+        .modal.show { display: flex; }
+        .modal-inner {
+            background: var(--paper-light);
+            border-top: 3px solid var(--cinnabar);
+            max-width: 72rem;
+            width: 100%;
+            max-height: 92vh;
+            overflow-y: auto;
+            box-shadow: 0 24px 60px rgba(0, 0, 0, 0.4);
+        }
+        .modal-head {
+            display: flex;
+            align-items: center;
+            justify-content: space-between;
+            padding: 1rem 1.25rem;
+            border-bottom: 1px solid rgba(31, 29, 26, 0.15);
+        }
+        .modal-head h3 { margin: 0; font-size: 1.1rem; }
+        .modal-close {
+            background: transparent;
+            border: 0;
+            color: var(--ink-soft);
+            font-size: 1.5rem;
+            cursor: pointer;
+            line-height: 1;
+        }
+        .modal-close:hover { color: var(--cinnabar); }
+        .modal-body { padding: 1.25rem; text-align: center; }
+        .modal-body img {
+            max-width: 100%;
+            max-height: 78vh;
+            display: block;
+            margin: 0 auto;
+            border: 1px solid rgba(31, 29, 26, 0.15);
+        }
+
+        /* 页脚 */
+        footer {
+            margin-top: 4rem;
+            padding: 2rem 1.5rem;
+            background: var(--ink);
+            color: var(--paper-light);
+            border-top: 4px solid var(--cinnabar);
+        }
+        footer .footer-inner {
+            max-width: 1200px;
+            margin: 0 auto;
+            display: flex;
+            justify-content: space-between;
+            gap: 1rem;
+            align-items: center;
+        }
+        footer p { margin: 0; color: rgba(244, 239, 227, 0.7); }
+
+        @media (max-width: 900px) {
+            .ach-grid.cols-3 { grid-template-columns: repeat(2, 1fr); }
+            .ach-card .thumb.cert { height: 13rem; }
+            .ach-card .thumb.social { height: 16rem; }
+        }
+        @media (max-width: 640px) {
+            .page-shell { padding-top: 5.5rem; }
+            .ach-grid.cols-2,
+            .ach-grid.cols-3 { grid-template-columns: 1fr; }
+            .ach-card .thumb.cert { height: 12rem; }
+            .ach-card .thumb.photo { height: 11rem; }
+            .ach-card .thumb.social { height: 14rem; }
+            footer .footer-inner { flex-direction: column; align-items: flex-start; }
+        }
+        @media (prefers-reduced-motion: reduce) {
+            *, *::before, *::after {
+                animation-duration: 0.01ms !important;
+                transition-duration: 0.01ms !important;
+                scroll-behavior: auto !important;
+            }
+        }
+    </style>
+</head>
+<body>
+    <!-- 导航栏 -->
+    <nav class="site-header fixed top-0 left-0 right-0 z-50">
+        <div class="max-w-6xl mx-auto px-4">
+            <div class="flex items-center justify-between h-16">
+                <a href="index.html" class="flex items-center no-underline">
+                    <i class="fas fa-ship text-2xl mr-2" style="color: var(--cinnabar);"></i>
+                    <span class="brand-name text-xl font-bold">叠滘龙船文化</span>
+                </a>
+                <div class="hidden md:flex items-center space-x-8">
+                    <a href="index.html" class="nav-link py-2">首页</a>
+                    <a href="search.html" class="nav-link py-2">档案搜索</a>
+                    <a href="achievements.html" class="nav-link active py-2">成果与足迹</a>
+                </div>
+                <button id="menuBtn" class="md:hidden text-2xl" style="color: var(--ink);">
+                    <i class="fas fa-bars"></i>
+                </button>
+            </div>
+            <div id="mobileMenu" class="mobile-menu md:hidden pb-4 hidden">
+                <a href="index.html" class="block py-2 nav-link">首页</a>
+                <a href="search.html" class="block py-2 nav-link">档案搜索</a>
+                <a href="achievements.html" class="block py-2 nav-link active">成果与足迹</a>
+            </div>
+        </div>
+    </nav>
+
+    <main class="page-shell">
+        <!-- 页面标题 -->
+        <section class="page-hero">
+            <span class="eyebrow">叠滘龙船文化 · 行走的小禅喵</span>
+            <h1>成果与足迹</h1>
+            <p>从竞赛答辩到街巷走访，从社交平台到幼儿园课堂——小禅喵走过的每一步，都被收进这份档案里。</p>
+        </section>
+
+        <!-- 锚点导航 -->
+        <nav class="anchor-nav">
+            <a href="#honor"><i class="fas fa-award"></i>竞赛荣誉</a>
+            <a href="#landing"><i class="fas fa-handshake"></i>落地证明</a>
+            <a href="#social"><i class="fas fa-mobile-alt"></i>社交平台</a>
+            <a href="#field"><i class="fas fa-map-marked-alt"></i>实地调研</a>
+        </nav>
+
+        <!-- 一、竞赛荣誉 -->
+        <section class="ach-section" id="honor">
+            <div class="ach-section-head">
+                <span class="eyebrow">竞赛荣誉 · 01</span>
+                <h2>从校赛到省级的认可</h2>
+                <p>「行走的小禅喵」项目先后获得第十五届全国大学生电子商务“创新、创意及创业”挑战赛校赛一等奖、中国国际大学生创新大赛（2025）校赛优胜奖，并获 2026 年度华南师范大学学生课外科研金种子一般课题立项。</p>
+            </div>
+
+            <div class="ach-grid cols-3">
+                <div class="ach-card" onclick="openMedia('材料/材料/竞赛奖状/行走的小 第十五届全国大学生电子商务“创新、创意及创业”挑战赛获奖证书.png', '三创赛 · 校级赛一等奖')">
+                    <div class="thumb cert contain">
+                        <img src="材料/材料/竞赛奖状/行走的小 第十五届全国大学生电子商务“创新、创意及创业”挑战赛获奖证书.png" alt="三创赛获奖证书">
+                    </div>
+                    <div class="meta">
+                        <span class="tag">竞赛奖状</span>
+                        <h3>第十五届全国大学生电子商务“创新、创意及创业”挑战赛</h3>
+                        <p>校级赛 · 一等奖</p>
+                    </div>
+                </div>
+
+                <div class="ach-card" onclick="openMedia('材料/材料/竞赛奖状/行走的小 中国国际大学生创新大赛（2025）获奖证书.png', '中国国际大学生创新大赛（2025）· 优胜奖')">
+                    <div class="thumb cert contain">
+                        <img src="材料/材料/竞赛奖状/行走的小 中国国际大学生创新大赛（2025）获奖证书.png" alt="中国国际大学生创新大赛获奖证书">
+                    </div>
+                    <div class="meta">
+                        <span class="tag">竞赛奖状</span>
+                        <h3>中国国际大学生创新大赛（2025）</h3>
+                        <p>校赛 · 优胜奖</p>
+                    </div>
+                </div>
+
+                <div class="ach-card" onclick="openMedia('材料/材料/竞赛奖状/金种子.png', '金种子一般课题立项档案')">
+                    <div class="thumb cert contain">
+                        <img src="材料/材料/竞赛奖状/金种子.png" alt="金种子立项档案">
+                    </div>
+                    <div class="meta">
+                        <span class="tag">科研立项</span>
+                        <h3>2026 年度华南师范大学学生课外科研金种子一般课题</h3>
+                        <p>立项档案</p>
+                    </div>
+                </div>
+            </div>
+        </section>
+
+        <!-- 二、落地证明 -->
+        <section class="ach-section" id="landing">
+            <div class="ach-section-head">
+                <span class="eyebrow">落地证明 · 02</span>
+                <h2>真的走进社区、走进课堂</h2>
+                <p>项目与桂城街道叠北社区、叠北幼儿园建立结对关系，开展公益宣讲，并获官方媒体关注与报道。</p>
+            </div>
+
+            <div class="ach-grid cols-3">
+                <div class="ach-card" onclick="openMedia('材料/材料/落地证明/百千万工程结对证明.jpg', '百千万工程结对证明')">
+                    <div class="thumb photo">
+                        <img src="材料/材料/落地证明/百千万工程结对证明.jpg" alt="百千万工程结对证明">
+                    </div>
+                    <div class="meta">
+                        <span class="tag">落地证明</span>
+                        <h3>百千万工程结对证明</h3>
+                        <p>与桂城街道叠北社区结对</p>
+                    </div>
+                </div>
+
+                <div class="ach-card" onclick="openMedia('材料/材料/落地证明/叠北幼儿园公益宣讲.png', '叠北幼儿园公益宣讲')">
+                    <div class="thumb photo">
+                        <img src="材料/材料/落地证明/叠北幼儿园公益宣讲.png" alt="叠北幼儿园公益宣讲">
+                    </div>
+                    <div class="meta">
+                        <span class="tag">落地证明</span>
+                        <h3>叠北幼儿园公益宣讲</h3>
+                        <p>“童心识叠滘，非遗润童年”课堂</p>
+                    </div>
+                </div>
+
+                <div class="ach-card" onclick="openMedia('材料/材料/落地证明/官方媒体对接.png', '官方媒体对接')">
+                    <div class="thumb photo">
+                        <img src="材料/材料/落地证明/官方媒体对接.png" alt="官方媒体对接">
+                    </div>
+                    <div class="meta">
+                        <span class="tag">落地证明</span>
+                        <h3>官方媒体对接</h3>
+                        <p>项目获地方官方媒体关注与报道</p>
+                    </div>
+                </div>
+            </div>
+        </section>
+
+        <!-- 三、社交平台 -->
+        <section class="ach-section" id="social">
+            <div class="ach-section-head">
+                <span class="eyebrow">社交平台 · 03</span>
+                <h2>小禅喵在线上</h2>
+                <p>「行走的小禅喵」在微博、微信视频号、小红书等平台同步运营，用年轻人喜欢的方式讲叠滘龙船故事。</p>
+            </div>
+
+            <div class="ach-grid cols-3">
+                <div class="ach-card" onclick="openMedia('材料/材料/IP社交平台账号/微博账号.png', '微博账号 · 行走的小禅喵')">
+                    <div class="thumb social">
+                        <img src="材料/材料/IP社交平台账号/微博账号.png" alt="微博账号截图">
+                    </div>
+                    <div class="meta">
+                        <span class="tag">社交平台</span>
+                        <h3>微博 · 行走的小禅喵</h3>
+                        <p>佛山文化探索官 · 带你打卡节庆盛事</p>
+                    </div>
+                </div>
+
+                <div class="ach-card" onclick="openMedia('材料/材料/IP社交平台账号/微信视频号.png', '微信视频号 · 行走的小禅喵')">
+                    <div class="thumb social">
+                        <img src="材料/材料/IP社交平台账号/微信视频号.png" alt="微信视频号截图">
+                    </div>
+                    <div class="meta">
+                        <span class="tag">社交平台</span>
+                        <h3>微信视频号 · 行走的小禅喵</h3>
+                        <p>视频号：行走的小禅喵</p>
+                    </div>
+                </div>
+
+                <div class="ach-card" onclick="openMedia('材料/材料/IP社交平台账号/小红书账号.png', '小红书账号 · 行走的小禅喵')">
+                    <div class="thumb social">
+                        <img src="材料/材料/IP社交平台账号/小红书账号.png" alt="小红书账号截图">
+                    </div>
+                    <div class="meta">
+                        <span class="tag">社交平台</span>
+                        <h3>小红书 · 行走的小禅喵</h3>
+                        <p>小红书号：4152691034 · 禅城韵味，喵趣新生</p>
+                    </div>
+                </div>
+            </div>
+        </section>
+
+        <!-- 四、实地调研 -->
+        <section class="ach-section" id="field">
+            <div class="ach-section-head">
+                <span class="eyebrow">实地调研 · 04</span>
+                <h2>走进叠北，走到现场</h2>
+                <p>团队多次前往叠滘叠北社区开展实地调研，走访街巷、市场与居民，把口述记忆和现场观察一并收进档案。</p>
+            </div>
+
+            <div class="ach-grid cols-2">
+                <div class="ach-card" onclick="openMedia('材料/材料/申省级材料/实地调研证明/叠北实地调研1.jpg', '叠北实地调研 1')">
+                    <div class="thumb photo" style="height:16rem;">
+                        <img src="材料/材料/申省级材料/实地调研证明/叠北实地调研1.jpg" alt="叠北实地调研 1">
+                    </div>
+                    <div class="meta">
+                        <span class="tag">实地调研</span>
+                        <h3>叠北实地调研 · 街巷走访</h3>
+                        <p>走访叠滘老街与叠北市场，记录水乡生活现场</p>
+                    </div>
+                </div>
+
+                <div class="ach-card" onclick="openMedia('材料/材料/申省级材料/实地调研证明/叠北实地调研2.jpg', '叠北实地调研 2')">
+                    <div class="thumb photo" style="height:16rem;">
+                        <img src="材料/材料/申省级材料/实地调研证明/叠北实地调研2.jpg" alt="叠北实地调研 2">
+                    </div>
+                    <div class="meta">
+                        <span class="tag">实地调研</span>
+                        <h3>叠北实地调研 · 深入社区</h3>
+                        <p>与社区居民、商户交流，采集口述与影像素材</p>
+                    </div>
+                </div>
+            </div>
+        </section>
+    </main>
+
+    <!-- 图片查看弹窗 -->
+    <div id="mediaModal" class="modal" onclick="if(event.target===this) closeMedia()">
+        <div class="modal-inner">
+            <div class="modal-head">
+                <h3 id="mediaTitle">查看</h3>
+                <button class="modal-close" onclick="closeMedia()" aria-label="关闭">&times;</button>
+            </div>
+            <div class="modal-body" id="mediaBody"></div>
+        </div>
+    </div>
+
+    <!-- 页脚 -->
+    <footer>
+        <div class="footer-inner">
+            <p>叠滘龙船文化口述史档案库 · 行走的小禅喵</p>
+            <p>传承非遗 · 守护文化</p>
+        </div>
+    </footer>
+
+    <script>
+        // 移动端菜单
+        document.addEventListener('DOMContentLoaded', function () {
+            const menuBtn = document.getElementById('menuBtn');
+            const mobileMenu = document.getElementById('mobileMenu');
+            if (menuBtn && mobileMenu) {
+                menuBtn.addEventListener('click', function () {
+                    mobileMenu.classList.toggle('hidden');
+                    const icon = menuBtn.querySelector('i');
+                    icon.classList.toggle('fa-bars');
+                    icon.classList.toggle('fa-times');
+                });
+            }
+        });
+
+        // 图片查看弹窗
+        function openMedia(src, title) {
+            const modal = document.getElementById('mediaModal');
+            const body = document.getElementById('mediaBody');
+            const titleEl = document.getElementById('mediaTitle');
+            if (!modal || !body) return;
+
+            titleEl.textContent = title || '查看';
+            body.innerHTML = `<img src="${src}" alt="${title}">`;
+
+            modal.classList.add('show');
+            document.body.style.overflow = 'hidden';
+        }
+
+        function closeMedia() {
+            const modal = document.getElementById('mediaModal');
+            const body = document.getElementById('mediaBody');
+            if (!modal) return;
+            modal.classList.remove('show');
+            body.innerHTML = '';
+            document.body.style.overflow = '';
+        }
+
+        // ESC 关闭
+        document.addEventListener('keydown', function (e) {
+            if (e.key === 'Escape') closeMedia();
+        });
+    </script>
+</body>
+</html>

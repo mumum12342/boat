@@ -1,0 +1,327 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>小禅喵 · 叠滘龙船文化</title>
+    <script src="https://cdn.tailwindcss.com"></script>
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+    <style>
+        :root {
+            --paper: #F4EFE3;
+            --paper-light: #FBF8F0;
+            --paper-deep: #E8DFCF;
+            --cinnabar: #A63D32;
+            --cinnabar-dark: #7E2F29;
+            --ink: #1F1D1A;
+            --ink-soft: #4B4740;
+        }
+
+        * { box-sizing: border-box; }
+        html { scroll-behavior: smooth; }
+        body {
+            margin: 0;
+            background: var(--paper);
+            color: var(--ink);
+            font-family: 'SimSun', 'Songti SC', 'STSong', serif;
+            background-image:
+                linear-gradient(rgba(31, 29, 26, 0.025) 1px, transparent 1px),
+                linear-gradient(90deg, rgba(31, 29, 26, 0.018) 1px, transparent 1px);
+            background-size: 7px 7px, 11px 11px;
+        }
+
+        .site-header {
+            background: rgba(251, 248, 240, 0.95);
+            border-bottom: 1px solid rgba(166, 61, 50, 0.5);
+            backdrop-filter: blur(10px);
+        }
+
+        .nav-link {
+            position: relative;
+            color: var(--ink-soft);
+            letter-spacing: 0.12em;
+        }
+
+        .nav-link::after {
+            content: '';
+            position: absolute;
+            left: 0;
+            right: 0;
+            bottom: 0;
+            height: 1px;
+            background: var(--cinnabar);
+            transform: scaleX(0);
+            transform-origin: left;
+            transition: transform 260ms ease;
+        }
+
+        .nav-link:hover, .nav-link.active { color: var(--cinnabar-dark); }
+        .nav-link:hover::after, .nav-link.active::after { transform: scaleX(1); }
+        .brand-name, h1, h2 { font-family: 'STKaiti', 'KaiTi', 'FZKai-Z03', '华文楷体', serif; }
+        .brand-name { color: var(--ink); letter-spacing: 0.12em; }
+
+        .page-shell { max-width: 1200px; margin: 0 auto; padding: 7rem 1.5rem 5rem; }
+        .eyebrow { color: var(--cinnabar); font-size: 0.78rem; letter-spacing: 0.28em; }
+        .section-rule { height: 1px; background: linear-gradient(90deg, var(--cinnabar), rgba(166, 61, 50, 0.2), transparent); }
+        .hero-copy { border-top: 1px solid rgba(166, 61, 50, 0.5); border-bottom: 1px solid rgba(31, 29, 26, 0.2); padding: 2rem 0; }
+        .hero-copy h1 { font-size: clamp(2.8rem, 7vw, 6rem); line-height: 1.15; color: var(--cinnabar-dark); letter-spacing: 0.12em; }
+        .hero-copy p { max-width: 42rem; color: var(--ink-soft); font-size: 1.05rem; line-height: 2; }
+
+        .costume-stage {
+            position: relative;
+            min-height: 30rem;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            overflow: hidden;
+            background: linear-gradient(160deg, rgba(232, 223, 207, 0.45), rgba(251, 248, 240, 0.2));
+            border-bottom: 1px solid rgba(31, 29, 26, 0.2);
+        }
+
+        .costume-stage::before, .costume-stage::after {
+            content: '';
+            position: absolute;
+            left: -5%;
+            right: -5%;
+            height: 1px;
+            background: rgba(166, 61, 50, 0.32);
+            transform: rotate(-5deg);
+        }
+        .costume-stage::before { top: 28%; }
+        .costume-stage::after { bottom: 25%; opacity: 0.65; }
+        .costume-image { position: relative; z-index: 1; max-width: min(88%, 31rem); max-height: 29rem; object-fit: contain; filter: drop-shadow(0 18px 14px rgba(31, 29, 26, 0.12)); transition: opacity 360ms ease, transform 650ms cubic-bezier(0.22, 0.61, 0.36, 1); }
+        .costume-image.is-changing { opacity: 0; transform: translateY(10px) scale(0.96); }
+        .seal-mark { position: absolute; top: 1.25rem; right: 1.25rem; width: 2.2rem; height: 2.2rem; border: 1px solid rgba(166, 61, 50, 0.7); color: var(--cinnabar); display: grid; place-items: center; font-size: 0.7rem; transform: rotate(7deg); }
+        .costume-caption { display: flex; align-items: baseline; justify-content: space-between; gap: 1rem; padding: 1rem 0; border-bottom: 1px solid rgba(31, 29, 26, 0.2); }
+        .costume-caption strong { color: var(--cinnabar-dark); font-family: 'STKaiti', 'KaiTi', 'FZKai-Z03', '华文楷体', serif; font-size: 1.8rem; font-weight: 400; }
+        .costume-caption span { color: var(--ink-soft); font-size: 0.85rem; letter-spacing: 0.12em; }
+        .costume-dots { display: flex; flex-wrap: wrap; gap: 0.45rem; margin-top: 1rem; }
+        .costume-dot { border: 0; border-bottom: 1px solid transparent; background: transparent; color: var(--ink-soft); padding: 0.3rem 0.15rem; cursor: pointer; font: inherit; font-size: 0.78rem; }
+        .costume-dot.active, .costume-dot:hover { color: var(--cinnabar); border-bottom-color: var(--cinnabar); }
+
+        .outline-button {
+            border: 1px solid var(--cinnabar);
+            color: var(--cinnabar-dark);
+            background: transparent;
+            padding: 0.7rem 1.1rem;
+            cursor: pointer;
+            font: inherit;
+            transition: background 260ms ease, color 260ms ease;
+        }
+        .outline-button:hover {
+            background: var(--cinnabar);
+            color: var(--paper-light);
+        }
+
+        .six-view-grid {
+            display: grid;
+            grid-template-columns: repeat(3, 1fr);
+            gap: 1.5rem;
+            margin-top: 2rem;
+        }
+        .six-view-card {
+            border: 1px solid rgba(31, 29, 26, 0.18);
+            background: rgba(251, 248, 240, 0.5);
+            padding: 0.75rem 0.75rem 0.5rem;
+            transition: border-color 260ms ease, box-shadow 260ms ease;
+        }
+        .six-view-card:hover {
+            border-color: var(--cinnabar);
+            box-shadow: 0 8px 20px rgba(166, 61, 50, 0.08);
+        }
+        .six-view-card img {
+            display: block;
+            width: 100%;
+            height: 14rem;
+            object-fit: contain;
+            background: var(--paper-light);
+            border: 1px solid rgba(31, 29, 26, 0.08);
+        }
+        .six-view-label {
+            text-align: center;
+            margin-top: 0.55rem;
+            font-size: 0.82rem;
+            letter-spacing: 0.14em;
+            color: var(--cinnabar-dark);
+            font-family: 'STKaiti', 'KaiTi', 'FZKai-Z03', '华文楷体', serif;
+        }
+        @media (max-width: 900px) {
+            .six-view-grid { grid-template-columns: repeat(2, 1fr); gap: 1rem; }
+            .six-view-card img { height: 11rem; }
+        }
+        @media (max-width: 480px) {
+            .six-view-grid { grid-template-columns: 1fr; }
+            .six-view-card img { height: 14rem; }
+        }
+
+        footer { margin-top: 4rem; padding: 2rem 1.5rem; background: var(--ink); color: var(--paper-light); border-top: 4px solid var(--cinnabar); }
+        footer .footer-inner { max-width: 1200px; margin: 0 auto; display: flex; justify-content: space-between; gap: 1rem; align-items: center; }
+        footer p { margin: 0; color: rgba(244, 239, 227, 0.7); }
+
+        @media (max-width: 768px) {
+            .page-shell { padding-top: 6rem; }
+            .hero-copy h1 { font-size: 3.2rem; }
+            .costume-stage { min-height: 23rem; }
+            footer .footer-inner { flex-direction: column; align-items: flex-start; }
+        }
+        @media (prefers-reduced-motion: reduce) {
+            *, *::before, *::after { animation-duration: 0.01ms !important; transition-duration: 0.01ms !important; scroll-behavior: auto !important; }
+        }
+    </style>
+</head>
+<body>
+    <nav class="site-header fixed top-0 left-0 right-0 z-50">
+        <div class="max-w-6xl mx-auto px-4">
+            <div class="flex items-center justify-between h-16">
+                <a href="index.html" class="flex items-center no-underline">
+                    <i class="fas fa-ship text-2xl text-red-700 mr-2"></i>
+                    <span class="brand-name text-xl font-bold">叠滘龙船文化</span>
+                </a>
+                <div class="hidden md:flex items-center space-x-8">
+                    <a href="index.html" class="nav-link py-2">首页</a>
+                    <a href="search.html" class="nav-link py-2">档案搜索</a>
+                    <a href="ip.html" class="nav-link active py-2">小禅喵</a>
+                    <a href="achievements.html" class="nav-link py-2">成果与足迹</a>
+                </div>
+            </div>
+        </div>
+    </nav>
+
+    <main class="page-shell">
+        <section class="hero-copy">
+            <span class="eyebrow">叠滘龙船文化 · IP 档案</span>
+            <h1>卷 · 小禅喵</h1>
+            <p>一只会讲龙船故事的小猫。它带着龙船纹样，用年轻人喜欢的方式，把叠滘老船工的口述记忆讲给更多人听。</p>
+        </section>
+
+        <!-- 第一组：节日与练功服轮换 -->
+        <section class="py-16">
+            <div class="grid lg:grid-cols-[1.15fr_0.85fr] gap-10 items-start">
+                <div>
+                    <div class="costume-stage">
+                        <span class="seal-mark">禅</span>
+                        <img id="costumeImage" class="costume-image" src="assets/ip/dragonboat.png" alt="小禅喵端午服装">
+                    </div>
+                    <div class="costume-caption">
+                        <strong id="costumeTitle">端午节</strong>
+                        <span id="costumeIndex">01 / 11</span>
+                    </div>
+                    <div id="costumeDots" class="costume-dots" aria-label="选择小禅喵形象"></div>
+                </div>
+                <div class="pt-4">
+                    <span class="eyebrow">形象轮换</span>
+                    <h2 class="text-3xl mt-3 mb-5">节日与练功服</h2>
+                    <p class="text-lg leading-loose text-gray-700">小禅喵随着节令换上不同服装，也穿上叠滘五区的特色服饰与武术练功服。每一次换装，都是一次文化记忆的再讲述。</p>
+                    <div class="section-rule my-8"></div>
+                    <p class="text-sm leading-loose text-gray-600">点击下方名称切换形象，也可以让它自动轮流展示。</p>
+                    <button id="costumeToggle" class="outline-button mt-5"><i class="fas fa-pause mr-2"></i>暂停轮换</button>
+                </div>
+            </div>
+        </section>
+
+        <!-- 第二组：六视图档案 -->
+        <section class="pt-16">
+            <div class="mb-6">
+                <span class="eyebrow">六视图档案 · 结构参考</span>
+                <h2 class="text-3xl mt-3 mb-4">小禅喵六视图</h2>
+                <p class="max-w-2xl text-lg leading-loose text-gray-700">六个标准视角，用于观察小禅喵的立体造型与细节比例，可作为设计、建模与周边开发的参考。</p>
+            </div>
+            <div class="section-rule mb-2"></div>
+            <div class="six-view-grid" id="sixViewGrid">
+                <!-- 由 JS 动态插入六视图卡片 -->
+            </div>
+        </section>
+    </main>
+
+    <footer>
+        <div class="footer-inner">
+            <p>叠滘龙船文化口述史档案库 · 小禅喵 IP</p>
+            <p>传承非遗 · 守护文化</p>
+        </div>
+    </footer>
+
+    <script>
+        (function() {
+            const costumes = [
+                { name: '端午节', file: 'assets/ip/dragonboat.png' },
+                { name: '春节', file: 'assets/ip/spring.png' },
+                { name: '元宵节', file: 'assets/ip/lantern.png' },
+                { name: '清明', file: 'assets/ip/qingming.png' },
+                { name: '中秋节', file: 'assets/ip/midautumn.png' },
+                { name: '禅城区', file: 'assets/ip/chancheng.png' },
+                { name: '高明区', file: 'assets/ip/gaoming.png' },
+                { name: '南海区', file: 'assets/ip/nanhai.png' },
+                { name: '三水区', file: 'assets/ip/sanshui.png' },
+                { name: '顺德区', file: 'assets/ip/shunde.png' },
+                { name: '武术练功服', file: 'assets/ip/wushu.png' }
+            ];
+            const total = costumes.length;
+
+            // ---------- 节日轮换 ----------
+            const costumeImage = document.getElementById('costumeImage');
+            const costumeTitle = document.getElementById('costumeTitle');
+            const costumeIndex = document.getElementById('costumeIndex');
+            const costumeDots = document.getElementById('costumeDots');
+            const costumeToggle = document.getElementById('costumeToggle');
+            let costumeIndexValue = 0;
+            let costumeTimer;
+            let costumePaused = false;
+
+            function showCostume(index) {
+                costumeIndexValue = (index + total) % total;
+                const item = costumes[costumeIndexValue];
+                costumeImage.classList.add('is-changing');
+                window.setTimeout(() => {
+                    costumeImage.src = item.file;
+                    costumeImage.alt = `小禅喵${item.name}形象`;
+                    costumeTitle.textContent = item.name;
+                    costumeIndex.textContent = `${String(costumeIndexValue + 1).padStart(2, '0')} / ${String(total).padStart(2, '0')}`;
+                    costumeImage.classList.remove('is-changing');
+                    document.querySelectorAll('.costume-dot').forEach((dot, dotIndex) => dot.classList.toggle('active', dotIndex === costumeIndexValue));
+                }, 220);
+            }
+
+            costumes.forEach((item, index) => {
+                const button = document.createElement('button');
+                button.type = 'button';
+                button.className = `costume-dot${index === 0 ? ' active' : ''}`;
+                button.textContent = item.name;
+                button.addEventListener('click', () => showCostume(index));
+                costumeDots.appendChild(button);
+            });
+
+            costumeToggle.addEventListener('click', () => {
+                costumePaused = !costumePaused;
+                costumeToggle.innerHTML = costumePaused ? '<i class="fas fa-play mr-2"></i>继续轮换' : '<i class="fas fa-pause mr-2"></i>暂停轮换';
+            });
+            costumeTimer = window.setInterval(() => { if (!costumePaused) showCostume(costumeIndexValue + 1); }, 4200);
+
+            // ---------- 六视图（相对路径） ----------
+            const sixViews = [
+                { label: '俯视图', file: '小禅喵图包 (2)/小禅喵图包/小禅喵2/六视图/六视图jpg/俯视图.JPG' },
+                { label: '后视图', file: '小禅喵图包 (2)/小禅喵图包/小禅喵2/六视图/六视图jpg/后视图.JPG' },
+                { label: '仰视图', file: '小禅喵图包 (2)/小禅喵图包/小禅喵2/六视图/六视图jpg/仰视图.jpg' },
+                { label: '右视图', file: '小禅喵图包 (2)/小禅喵图包/小禅喵2/六视图/六视图jpg/右视图.JPG' },
+                { label: '主视图', file: '小禅喵图包 (2)/小禅喵图包/小禅喵2/六视图/六视图jpg/主视图.JPG' },
+                { label: '左视图', file: '小禅喵图包 (2)/小禅喵图包/小禅喵2/六视图/六视图jpg/左视图.JPG' }
+            ];
+
+            const sixViewGrid = document.getElementById('sixViewGrid');
+            sixViews.forEach(item => {
+                const card = document.createElement('div');
+                card.className = 'six-view-card';
+                card.innerHTML = `
+                    <img src="${item.file}" alt="小禅喵${item.label}" loading="lazy"
+                         onerror="this.style.opacity='0.4';this.alt='图片无法加载：${item.label}（请检查路径）'">
+                    <div class="six-view-label">${item.label}</div>
+                `;
+                sixViewGrid.appendChild(card);
+            });
+
+            window.addEventListener('beforeunload', () => {
+                if (costumeTimer) clearInterval(costumeTimer);
+            });
+        })();
+    </script>
+</body>
+</html>

@@ -1,0 +1,402 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>口述史详情 - 叠滘龙船文化口述史档案库</title>
+    <script src="https://cdn.tailwindcss.com"></script>
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+    <style>
+        :root {
+            --color-red-primary: #B91C1C;
+            --color-gold: #D4AF37;
+        }
+
+        body {
+            font-family: 'Microsoft YaHei', 'PingFang SC', sans-serif;
+        }
+
+        .pattern-bg {
+            background-image:
+                radial-gradient(circle at 25% 25%, rgba(212, 175, 55, 0.1) 0%, transparent 50%),
+                radial-gradient(circle at 75% 75%, rgba(185, 28, 28, 0.05) 0%, transparent 50%);
+        }
+
+        .gold-text {
+            background: linear-gradient(135deg, #D4AF37 0%, #F5DEB3 50%, #D4AF37 100%);
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+            background-clip: text;
+        }
+
+        .nav-link.active {
+            color: #D4AF37;
+            border-bottom: 2px solid #D4AF37;
+        }
+
+        /* 内容样式 */
+        .content-text {
+            line-height: 2;
+            text-align: justify;
+        }
+
+        .content-text p {
+            margin-bottom: 1em;
+            white-space: pre-wrap;
+        }
+
+        .content-text p:first-child {
+            font-weight: 700;
+            color: #991B1B;
+        }
+
+        /* 装饰边框 */
+        .decorative-border {
+            border-image: linear-gradient(135deg, #D4AF37, #B91C1C, #D4AF37) 1;
+        }
+
+        /* 返回按钮悬浮效果 */
+        .back-btn:hover {
+            transform: translateX(-4px);
+        }
+
+        /* 图片画廊 */
+        .gallery-image {
+            transition: transform 0.3s ease;
+        }
+
+        .gallery-image:hover {
+            transform: scale(1.05);
+        }
+
+        /* 淡入动画 */
+        @keyframes fadeInUp {
+            from {
+                opacity: 0;
+                transform: translateY(20px);
+            }
+            to {
+                opacity: 1;
+                transform: translateY(0);
+            }
+        }
+
+        .animate-fade-in {
+            animation: fadeInUp 0.5s ease-out forwards;
+        }
+
+        /* 图片灯箱 */
+        .lightbox {
+            display: none;
+            position: fixed;
+            top: 0;
+            left: 0;
+            right: 0;
+            bottom: 0;
+            background: rgba(0, 0, 0, 0.9);
+            z-index: 1000;
+            align-items: center;
+            justify-content: center;
+        }
+
+        .lightbox.show {
+            display: flex;
+        }
+
+        .lightbox img {
+            max-width: 90%;
+            max-height: 90%;
+            object-fit: contain;
+        }
+
+        .lightbox-close {
+            position: absolute;
+            top: 20px;
+            right: 20px;
+            color: white;
+            font-size: 2rem;
+            cursor: pointer;
+        }
+            /* 详情页水墨长卷视觉 */
+        :root { --paper: #F4EFE3; --paper-light: #FBF8F0; --paper-deep: #E8DFCF; --cinnabar: #A63D32; --cinnabar-dark: #7E2F29; --ink: #1F1D1A; --ink-soft: #4B4740; }
+        body { background: var(--paper) !important; color: var(--ink); font-family: 'SimSun', 'Songti SC', 'STSong', serif !important; background-image: linear-gradient(rgba(31,29,26,.025) 1px, transparent 1px), linear-gradient(90deg, rgba(31,29,26,.018) 1px, transparent 1px) !important; background-size: 7px 7px, 11px 11px; }
+        nav { background: rgba(251,248,240,.95) !important; border-bottom: 1px solid rgba(166,61,50,.5); box-shadow: none !important; backdrop-filter: blur(10px); }
+        nav .fa-ship { color: var(--cinnabar) !important; } nav span { color: var(--ink) !important; font-family: 'STKaiti','KaiTi','FZKai-Z03','华文楷体',serif !important; letter-spacing: .12em; }
+        nav .nav-link { color: var(--ink-soft) !important; font-family: 'SimSun','Songti SC','STSong',serif !important; position: relative; }
+        nav .nav-link.active { color: var(--cinnabar-dark) !important; border-bottom: 0 !important; }
+        nav .nav-link::after { content:''; position:absolute; left:0; right:0; bottom:0; height:1px; background:var(--cinnabar); transform:scaleX(0); transform-origin:left; transition:transform 260ms ease; }
+        nav .nav-link:hover::after, nav .nav-link.active::after { transform:scaleX(1); } nav #menuBtn { color: var(--ink) !important; }
+        nav .mobile-menu { border-top: 1px solid rgba(166,61,50,.2); } nav .mobile-menu a { color: var(--ink-soft) !important; border-bottom:1px solid rgba(31,29,26,.12); }
+        main { position: relative; } main > .max-w-4xl > a { color: var(--cinnabar-dark) !important; font-family:'SimSun','Songti SC','STSong',serif; }
+        #articleContent { background: var(--paper-light) !important; border-radius: 0 !important; box-shadow: none !important; border-top: 3px solid var(--cinnabar); border-bottom: 1px solid rgba(31,29,26,.2); }
+        #articleContent > div:first-child { background: var(--paper-deep) !important; border-bottom: 1px solid rgba(166,61,50,.35); }
+        #articleContent h1 { color: var(--cinnabar-dark) !important; font-family:'STKaiti','KaiTi','FZKai-Z03','华文楷体',serif !important; letter-spacing:.1em; }
+        #articleContent .text-red-200, #articleContent .text-red-100 { color: var(--cinnabar-dark) !important; } #articleContent .text-amber-600 { color: var(--cinnabar) !important; }
+        .content-text { color: var(--ink-soft) !important; line-height: 2.25 !important; font-size: 1.08rem; letter-spacing: .03em; }
+        .content-text p { margin-bottom: 1.3em; } .content-text p:first-child { color: var(--cinnabar-dark) !important; font-family:'STKaiti','KaiTi','FZKai-Z03','华文楷体',serif; font-size:1.2em; }
+        #articleContent .border-t, #articleContent .border-b { border-color: rgba(31,29,26,.16) !important; }
+        .gallery-image { border-radius: 0 !important; box-shadow: none !important; filter: grayscale(12%) sepia(8%) saturate(.88); }
+        .gallery-image:hover { transform: translateY(-4px) !important; filter: grayscale(0%) sepia(4%) saturate(1); }
+        #notFound { background: transparent !important; } footer { background: var(--ink) !important; border-top:4px solid var(--cinnabar); } footer h4, footer span { font-family:'STKaiti','KaiTi','FZKai-Z03','华文楷体',serif; }
+        .lightbox { background: rgba(31,29,26,.86) !important; }</style>
+</head>
+<body class="bg-stone-50 pattern-bg min-h-screen">
+    <!-- 固定导航栏 -->
+    <nav class="fixed top-0 left-0 right-0 z-50">
+        <div class="max-w-6xl mx-auto px-4">
+            <div class="flex items-center justify-between h-16">
+                <!-- Logo -->
+                <div class="flex items-center">
+                    <i class="fas fa-ship text-2xl text-amber-400 mr-2"></i>
+                    <span class="text-xl font-bold text-white">叠滘龙船文化</span>
+                </div>
+
+                <!-- 桌面端导航 -->
+                <div class="hidden md:flex items-center space-x-8">
+                    <a href="index.html" class="nav-link text-white hover:text-amber-300 transition-colors py-2">首页</a>
+                    <a href="search.html" class="nav-link active text-white hover:text-amber-300 transition-colors py-2">档案搜索</a>
+                    <a href="admin.html" class="nav-link text-white hover:text-amber-300 transition-colors py-2">后台管理</a>
+                </div>
+
+                <!-- 移动端汉堡菜单 -->
+                <button id="menuBtn" class="md:hidden text-white text-2xl">
+                    <i class="fas fa-bars"></i>
+                </button>
+            </div>
+
+            <!-- 移动端菜单 -->
+            <div id="mobileMenu" class="mobile-menu md:hidden pb-4">
+                <a href="index.html" class="block py-2 text-white hover:text-amber-300">首页</a>
+                <a href="search.html" class="block py-2 text-white hover:text-amber-300">档案搜索</a>
+                <a href="admin.html" class="block py-2 text-white hover:text-amber-300">后台管理</a>
+            </div>
+        </div>
+    </nav>
+
+    <!-- 主内容区 -->
+    <main class="pt-24 pb-16 px-4">
+        <div class="max-w-4xl mx-auto">
+            <!-- 返回按钮 -->
+            <a href="search.html" class="back-btn inline-flex items-center gap-2 text-red-700 hover:text-amber-600 transition-all mb-8 font-medium">
+                <i class="fas fa-arrow-left"></i>
+                返回搜索页
+            </a>
+
+            <!-- 文章内容 -->
+            <article id="articleContent" class="bg-white rounded-2xl shadow-xl overflow-hidden animate-fade-in">
+                <!-- 由JS动态填充 -->
+            </article>
+
+            <!-- 未找到提示 -->
+            <div id="notFound" class="hidden text-center py-20">
+                <div class="w-24 h-24 bg-gray-100 rounded-full flex items-center justify-center mx-auto mb-6">
+                    <i class="fas fa-exclamation-triangle text-4xl text-gray-400"></i>
+                </div>
+                <h3 class="text-xl font-bold text-gray-600 mb-4">未找到该档案</h3>
+                <p class="text-gray-500 mb-6">该档案可能已被删除或链接已失效</p>
+                <a href="search.html" class="inline-flex items-center gap-2 px-6 py-3 bg-gradient-to-r from-red-700 to-red-800 text-white font-medium rounded-xl hover:from-red-800 hover:to-red-900 transition-all">
+                    <i class="fas fa-search"></i>
+                    返回搜索页
+                </a>
+            </div>
+        </div>
+    </main>
+
+    <!-- 图片灯箱 -->
+    <div id="lightbox" class="lightbox" onclick="closeLightbox()">
+        <span class="lightbox-close"><i class="fas fa-times"></i></span>
+        <img id="lightboxImg" src="" alt="">
+    </div>
+
+    <!-- 页脚 -->
+    <footer class="bg-gradient-to-r from-red-900 via-red-800 to-red-900 text-white py-8 px-4">
+        <div class="max-w-6xl mx-auto text-center">
+            <div class="flex items-center justify-center gap-2 mb-4">
+                <i class="fas fa-ship text-amber-400"></i>
+                <span class="text-lg font-bold">叠滘龙船文化口述史档案库</span>
+            </div>
+            <p class="text-red-200 text-sm">
+                © 2024 叠滘龙船文化口述史档案库 版权所有 · 传承非遗 · 守护文化
+            </p>
+        </div>
+    </footer>
+
+    <!-- JS脚本 -->
+    <script src="interviews-data.js"></script>
+    <script src="data.js"></script>
+    <script>
+        // 页面加载完成后执行
+        document.addEventListener('DOMContentLoaded', function() {
+            // 移动端菜单切换
+            const menuBtn = document.getElementById('menuBtn');
+            const mobileMenu = document.getElementById('mobileMenu');
+
+            menuBtn.addEventListener('click', function() {
+                mobileMenu.classList.toggle('show');
+                const icon = menuBtn.querySelector('i');
+                icon.classList.toggle('fa-bars');
+                icon.classList.toggle('fa-times');
+            });
+
+            // 获取URL参数中的ID
+            const urlParams = new URLSearchParams(window.location.search);
+            const archiveId = urlParams.get('id');
+
+            if (archiveId) {
+                loadArchiveDetail(archiveId);
+            } else {
+                showNotFound();
+            }
+        });
+
+        /**
+         * 加载档案详情
+         * @param {string} id - 档案ID
+         */
+        function loadArchiveDetail(id) {
+            const archive = getArchiveById(id);
+
+            if (!archive) {
+                showNotFound();
+                return;
+            }
+
+            const articleContent = document.getElementById('articleContent');
+            const imageUrls = Array.isArray(archive.images)
+                ? archive.images.map(getSafeImageUrl).filter(Boolean)
+                : [];
+
+            document.title = `${archive.title} - 叠滘龙船文化口述史档案库`;
+
+            // 生成HTML内容
+            articleContent.innerHTML = `
+                <!-- 顶部图片区域 -->
+                <div class="relative h-64 md:h-80 bg-gradient-to-br from-red-900 to-red-700 overflow-hidden">
+                    ${imageUrls.length > 0
+                        ? `<img src="${escapeHtml(imageUrls[0])}" alt="${escapeHtml(archive.title)}" class="w-full h-full object-cover opacity-60">`
+                        : `<div class="w-full h-full flex items-center justify-center"><i class="fas fa-ship text-8xl text-amber-300 opacity-30"></i></div>`
+                    }
+                    <div class="absolute inset-0 bg-gradient-to-t from-black/70 via-transparent to-transparent"></div>
+
+                    <!-- 标题叠加 -->
+                    <div class="absolute bottom-0 left-0 right-0 p-6 md:p-8">
+                        <h1 class="text-2xl md:text-3xl font-bold text-white mb-2">${escapeHtml(archive.title)}</h1>
+                    </div>
+                </div>
+
+                <!-- 元信息 -->
+                <div class="px-6 md:px-10 py-6 border-b border-amber-100">
+                    <div class="flex flex-wrap items-center gap-x-6 gap-y-3 text-gray-600">
+                        <div class="flex items-center gap-2">
+                            <i class="fas fa-hashtag text-amber-600"></i>
+                            <span>档案编号：${escapeHtml(archive.id)}</span>
+                        </div>
+                        <div class="flex items-center gap-2">
+                            <i class="fas fa-user text-amber-600"></i>
+                            <span class="font-medium">受访者身份：${escapeHtml(archive.category || archive.inheritor || '未记录')}</span>
+                        </div>
+                        <div class="flex items-center gap-2">
+                            <i class="fas fa-tags text-amber-600"></i>
+                            <span>身份类别：${escapeHtml(archive.role || '未分类')}</span>
+                        </div>
+                        <div class="flex items-center gap-2">
+                            <i class="fas fa-calendar-alt text-amber-600"></i>
+                            <span>访谈日期：${escapeHtml(archive.collectDate || '未记录')}</span>
+                        </div>
+                        <div class="flex items-center gap-2">
+                            <i class="fas fa-map-marker-alt text-amber-600"></i>
+                            <span>访谈地点：${escapeHtml(archive.location || '未记录')}</span>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- 正文内容 -->
+                <div class="px-6 md:px-10 py-8 md:py-10">
+                    <div class="content-text text-gray-700 text-base md:text-lg">
+                        ${formatContent(archive.content)}
+                    </div>
+                </div>
+
+                <!-- 图片画廊 -->
+                ${archive.images && archive.images.length > 0 ? `
+                <div class="px-6 md:px-10 py-6 border-t border-amber-100">
+                    <h3 class="text-lg font-bold text-gray-800 mb-4 flex items-center gap-2">
+                        <i class="fas fa-images text-amber-600"></i>
+                        相关图片
+                    </h3>
+                    <div class="grid grid-cols-2 md:grid-cols-3 gap-4">
+                        ${archive.images.map(img => `
+                            <img
+                                src="${img}"
+                                alt="相关图片"
+                                class="gallery-image w-full h-40 object-cover rounded-lg cursor-pointer shadow-md hover:shadow-lg"
+                                onclick="openLightbox('${img}')"
+                            >
+                        `).join('')}
+                    </div>
+                </div>
+                ` : ''}
+
+                <!-- 底部装饰 -->
+                <div class="px-6 md:px-10 py-6 bg-stone-50 border-t border-amber-100">
+                    <div class="flex items-center justify-center gap-4">
+                        <div class="w-20 h-0.5 bg-gradient-to-r from-transparent to-amber-400"></div>
+                        <i class="fas fa-dragon text-amber-500"></i>
+                        <div class="w-20 h-0.5 bg-gradient-to-l from-transparent to-amber-400"></div>
+                    </div>
+                </div>
+            `;
+        }
+
+        /**
+         * 显示未找到提示
+         */
+        function showNotFound() {
+            document.getElementById('articleContent').classList.add('hidden');
+            document.getElementById('notFound').classList.remove('hidden');
+        }
+
+        /**
+         * 打开灯箱
+         * @param {string} imgSrc - 图片URL
+         */
+        function openLightbox(imgSrc) {
+            const lightbox = document.getElementById('lightbox');
+            const lightboxImg = document.getElementById('lightboxImg');
+            lightboxImg.src = imgSrc;
+            lightbox.classList.add('show');
+            document.body.style.overflow = 'hidden';
+        }
+
+        /**
+         * 关闭灯箱
+         */
+        function closeLightbox() {
+            const lightbox = document.getElementById('lightbox');
+            lightbox.classList.remove('show');
+            document.body.style.overflow = '';
+        }
+
+        /**
+         * HTML转义
+         * @param {string} text - 原始文本
+         * @returns {string} 转义后的文本
+         */
+        function escapeHtml(text) {
+            const div = document.createElement('div');
+            div.textContent = text;
+            return div.innerHTML;
+        }
+
+        /**
+         * 格式化内容（将换行转换为段落）
+         * @param {string} content - 原始内容
+         * @returns {string} 格式化后的HTML
+         */
+        function formatContent(content) {
+            const paragraphs = content.split('\n').filter(p => p.trim());
+            return paragraphs.map(p => `<p>${escapeHtml(p)}</p>`).join('');
+        }
+    </script>
+</body>
+</html>
