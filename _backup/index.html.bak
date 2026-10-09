@@ -1,0 +1,559 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>叠滘龙船文化口述史档案库</title>
+    <script src="https://cdn.tailwindcss.com"></script>
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+    <style>
+        /* 自定义样式 - 中国红+鎏金配色 */
+        :root {
+            --color-red-primary: #B91C1C;
+            --color-red-dark: #991B1B;
+            --color-red-light: #DC2626;
+            --color-gold: #D4AF37;
+            --color-gold-light: #F5DEB3;
+        }
+
+        body {
+            font-family: 'Microsoft YaHei', 'PingFang SC', sans-serif;
+        }
+
+        /* 国风纹理背景 */
+        .pattern-bg {
+            background-image:
+                radial-gradient(circle at 25% 25%, rgba(212, 175, 55, 0.1) 0%, transparent 50%),
+                radial-gradient(circle at 75% 75%, rgba(185, 28, 28, 0.05) 0%, transparent 50%);
+        }
+
+        /* 龙船波浪动画 */
+        .wave-animation {
+            animation: wave 3s ease-in-out infinite;
+        }
+
+        @keyframes wave {
+            0%, 100% { transform: translateY(0); }
+            50% { transform: translateY(-10px); }
+        }
+
+        /* 金色渐变文字 */
+        .gold-text {
+            background: linear-gradient(135deg, #D4AF37 0%, #F5DEB3 50%, #D4AF37 100%);
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+            background-clip: text;
+        }
+
+        /* 卡片悬浮效果增强 */
+        .card-hover:hover {
+            transform: translateY(-4px);
+            box-shadow: 0 20px 40px rgba(185, 28, 28, 0.15);
+        }
+
+        /* 国风边框装饰 */
+        .traditional-border {
+            border-image: linear-gradient(135deg, #D4AF37, #B91C1C, #D4AF37) 1;
+        }
+
+        /* 导航激活状态 */
+        .nav-link.active {
+            color: #D4AF37;
+            border-bottom: 2px solid #D4AF37;
+        }
+
+        /* 响应式导航 */
+        @media (max-width: 768px) {
+            .mobile-menu {
+                display: none;
+            }
+            .mobile-menu.show {
+                display: block;
+            }
+        }
+    </style>
+</head>
+<body class="bg-stone-50 pattern-bg min-h-screen">
+    <!-- 固定导航栏 -->
+    <nav class="fixed top-0 left-0 right-0 bg-gradient-to-r from-red-900 via-red-800 to-red-900 shadow-lg z-50">
+        <div class="max-w-6xl mx-auto px-4">
+            <div class="flex items-center justify-between h-16">
+                <!-- Logo -->
+                <div class="flex items-center">
+                    <i class="fas fa-ship text-2xl text-amber-400 mr-2"></i>
+                    <span class="text-xl font-bold text-white">叠滘龙船文化</span>
+                </div>
+
+                <!-- 桌面端导航 -->
+                <div class="hidden md:flex items-center space-x-8">
+                    <a href="index.html" class="nav-link active text-white hover:text-amber-300 transition-colors py-2">首页</a>
+                    <a href="search.html" class="nav-link text-white hover:text-amber-300 transition-colors py-2">档案搜索</a>
+                </div>
+
+                <!-- 移动端汉堡菜单 -->
+                <button id="menuBtn" class="md:hidden text-white text-2xl">
+                    <i class="fas fa-bars"></i>
+                </button>
+            </div>
+
+            <!-- 移动端菜单 -->
+            <div id="mobileMenu" class="mobile-menu md:hidden pb-4">
+                <a href="index.html" class="block py-2 text-white hover:text-amber-300">首页</a>
+                <a href="search.html" class="block py-2 text-white hover:text-amber-300">档案搜索</a>
+            </div>
+        </div>
+    </nav>
+
+<!-- 主内容区 -->
+<main class="pt-16">
+    <!-- 首屏横幅 -->
+    <section class="relative h-[500px] md:h-[600px] overflow-hidden">
+        <!-- 龙船背景图 -->
+    <div class="absolute inset-0">
+        <img src="龙舟/叠滘龙舟.jpg" 
+             alt="叠滘龙船竞渡实拍" 
+            class="w-full h-full object-cover scale-100">
+        <div class="absolute inset-0 bg-gradient-to-b from-red-950/90 via-red-900/60 to-red-900/30"></div>
+    </div>
+
+        <!-- 横幅内容 -->
+        <div class="relative z-10 flex flex-col items-center justify-center h-full px-4 pb-24 text-center">
+            <!-- 龙船图标 -->
+            <div class="wave-animation mb-6">
+                <i class="fas fa-ship text-6xl md:text-8xl text-amber-400 drop-shadow-lg"></i>
+            </div>
+
+            <!-- 标题 -->
+            <h1 class="text-3xl md:text-5xl lg:text-6xl font-bold mb-4">
+                <span class="gold-text">叠滘龙船文化</span>
+            </h1>
+            <h2 class="text-2xl md:text-4xl text-white font-bold mb-6 tracking-wider">
+                口述史档案库
+            </h2>
+            <p class="text-white/90 text-base md:text-lg max-w-2xl leading-relaxed">
+                走进叠滘，听他们讲龙船，把散落的记忆一句一句收进档案
+            </p>
+
+            <!-- 装饰线 -->
+            <div class="flex items-center gap-4 mt-6">
+                <div class="w-16 h-0.5 bg-gradient-to-r from-transparent to-amber-400"></div>
+                <i class="fas fa-dragon text-amber-400"></i>
+                <div class="w-16 h-0.5 bg-gradient-to-l from-transparent to-amber-400"></div>
+            </div>
+        </div>
+
+        
+        <!-- 底部波浪装饰 -->
+        <div class="absolute bottom-0 left-0 right-0">
+            <svg viewBox="0 0 1440 120" fill="none" xmlns="http://www.w3.org/2000/svg">
+                <path d="M0 120L80 106C160 92 240 78 360 78C480 78 600 92 720 98C840 104 960 104 
+                        1080 98C1200 92 1320 86 1380 84L1440 82V120H0Z" fill="#FFFBEB"/>
+            </svg>
+        </div>
+
+        
+</div>
+    </section>
+
+        <!-- 板块一：叠滘龙船数据亮点 -->
+        <section class="relative py-20 px-4 bg-amber-70">
+            <div class="relative max-w-6xl mx-auto">
+                <!-- 板块标题 -->
+                <div class="text-center mb-12">
+                    <h2 class="text-2xl md:text-3xl font-bold text-red-800 mb-4">龙船破浪，数据见证</h2>
+                    <div class="flex items-center justify-center gap-4">
+                        <div class="w-12 h-0.5 bg-gradient-to-r from-transparent to-amber-500"></div>
+                        <i class="fas fa-chart-bar text-amber-500"></i>
+                        <div class="w-12 h-0.5 bg-gradient-to-l from-transparent to-amber-500"></div>
+                    </div>
+                </div>
+
+                <!-- 数据卡片 -->
+                <div class="grid grid-cols-2 md:grid-cols-4 gap-4 md:gap-6">
+                    <!-- 卡片 1 -->
+                    <div class="bg-white rounded-2xl shadow-lg p-6 text-center border-t-4 border-red-700 card-hover transition-all duration-300">
+                        <div class="text-3xl md:text-4xl font-bold text-red-700 mb-2">68<span class="text-lg">万</span></div>
+                        <div class="text-sm text-gray-700 font-medium mb-1">现场观赛人次</div>
+                        <div class="text-xs text-gray-500 leading-relaxed">2025 年叠滘龙船漂移赛现场观赛</div>
+                    </div>
+
+                    <!-- 卡片 2 -->
+                    <div class="bg-white rounded-2xl shadow-lg p-6 text-center border-t-4 border-amber-500 card-hover transition-all duration-300">
+                        <div class="text-3xl md:text-4xl font-bold text-amber-600 mb-2">3.45<span class="text-lg">亿</span></div>
+                        <div class="text-sm text-gray-700 font-medium mb-1">带动消费（元）</div>
+                        <div class="text-xs text-gray-500 leading-relaxed">2025 年叠滘龙船漂移带动周边消费</div>
+                    </div>
+
+                    <!-- 卡片 3 -->
+                    <div class="bg-white rounded-2xl shadow-lg p-6 text-center border-t-4 border-red-700 card-hover transition-all duration-300">
+                        <div class="text-3xl md:text-4xl font-bold text-red-700 mb-2">70<span class="text-lg">亿</span></div>
+                        <div class="text-sm text-gray-700 font-medium mb-1">全网传播量（次）</div>
+                        <div class="text-xs text-gray-500 leading-relaxed">2025 年端午期间相关话题全网传播</div>
+                    </div>
+
+                    <!-- 卡片 4 -->
+                    <div class="bg-white rounded-2xl shadow-lg p-6 text-center border-t-4 border-amber-500 card-hover transition-all duration-300">
+                        <div class="text-3xl md:text-4xl font-bold text-amber-600 mb-2">2021</div>
+                        <div class="text-sm text-gray-700 font-medium mb-1">入选国家级非遗</div>
+                        <div class="text-xs text-gray-500 leading-relaxed">叠滘弯道赛龙船列入国家级非遗名录</div>
+                    </div>
+                </div>
+
+                <!-- 统一数据来源 -->
+                <p class="text-center text-xs text-gray-400 mt-8">
+                    数据来源：珠江时报、佛山新闻网，2025 年南海龙超系列赛事公开报道
+                </p>
+            </div>
+        </section>
+
+        <!-- 板块二：叠滘龙船文化简介 -->
+        <section class="relative py-16 md:py-20 px-4 bg-amber-60">
+            <!-- 顶部白色渐变过渡条 -->
+            <div class="absolute top-0 left-0 right-0 h-8 bg-gradient-to-b from-white to-transparent pointer-events-none"></div>
+
+            <div class="relative max-w-6xl mx-auto">
+                <!-- 板块标题 -->
+                <div class="text-center mb-12">
+                    <h2 class="text-2xl md:text-3xl font-bold text-red-800 mb-4">叠滘龙船文化</h2>
+                    <div class="flex items-center justify-center gap-4">
+                        <div class="w-12 h-0.5 bg-gradient-to-r from-transparent to-amber-500"></div>
+                        <i class="fas fa-water text-amber-500"></i>
+                        <div class="w-12 h-0.5 bg-gradient-to-l from-transparent to-amber-500"></div>
+                    </div>
+                </div>
+
+                <!-- 内容卡片 -->
+                <div class="grid md:grid-cols-3 gap-6">
+                    <!-- 地域特色 -->
+                    <div class="bg-white rounded-xl shadow-lg p-6 card-hover transition-all duration-300 border-t-4 border-red-700">
+                        <div class="w-16 h-16 bg-gradient-to-br from-red-700 to-red-800 rounded-full flex items-center justify-center mb-4 mx-auto">
+                            <i class="fas fa-map-marked-alt text-2xl text-amber-400"></i>
+                        </div>
+                        <h3 class="text-xl font-bold text-gray-800 text-center mb-4">地域特色</h3>
+                        <p class="text-gray-600 leading-relaxed text-sm">
+                            叠滘位于佛山市南海区，是珠江三角洲著名的水乡。龙船活动可追溯至明清时期，村民世代临水而居，龙船竞渡已成为当地最重要的民俗活动。
+                        </p>
+                    </div>
+
+                    <!-- 赛事民俗 -->
+                    <div class="bg-white rounded-xl shadow-lg p-6 card-hover transition-all duration-300 border-t-4 border-amber-500">
+                        <div class="w-16 h-16 bg-gradient-to-br from-amber-500 to-amber-600 rounded-full flex items-center justify-center mb-4 mx-auto">
+                            <i class="fas fa-trophy text-2xl text-white"></i>
+                        </div>
+                        <h3 class="text-xl font-bold text-gray-800 text-center mb-4">赛事民俗</h3>
+                        <p class="text-gray-600 leading-relaxed text-sm">
+                            每年端午期间举办龙船竞渡，赛道设于叠滘河涌，赛道蜿蜒曲折，素有"龙船漂移"之美誉。十里八乡村民前来观看，场面热闹非凡。
+                        </p>
+                    </div>
+
+                    <!-- 文化价值 -->
+                    <div class="bg-white rounded-xl shadow-lg p-6 card-hover transition-all duration-300 border-t-4 border-red-700">
+                        <div class="w-16 h-16 bg-gradient-to-br from-red-700 to-red-800 rounded-full flex items-center justify-center mb-4 mx-auto">
+                            <i class="fas fa-gem text-2xl text-amber-400"></i>
+                        </div>
+                        <h3 class="text-xl font-bold text-gray-800 text-center mb-4">文化价值</h3>
+                        <p class="text-gray-600 leading-relaxed text-sm">
+                            叠滘龙船文化入选广东省非物质文化遗产名录，体现了团结拼搏、奋勇争先的龙船精神，是研究珠三角水乡文化的重要窗口。
+                        </p>
+                    </div>
+                </div>
+            </div>
+        </section>
+
+        <!-- 板块三：项目介绍（三大痛点 → 三大建设） -->
+        <section class="py-16 md:py-20 px-4 bg-gradient-to-b from-stone-100 to-stone-50">
+            <div class="max-w-6xl mx-auto">
+                <!-- 板块标题 -->
+                <div class="text-center mb-12">
+                    <h2 class="text-2xl md:text-3xl font-bold text-red-800 mb-3">看见问题，然后行动</h2>
+                    <p class="text-amber-600 text-sm md:text-base tracking-[0.3em] mb-4">破三坎 · 开三路</p>
+                    <div class="flex items-center justify-center gap-4">
+                        <div class="w-12 h-0.5 bg-gradient-to-r from-transparent to-amber-500"></div>
+                        <i class="fas fa-hands-helping text-amber-500"></i>
+                        <div class="w-12 h-0.5 bg-gradient-to-l from-transparent to-amber-500"></div>
+                    </div>
+                </div>
+
+                <!-- 三大痛点 + 三大建设 -->
+                <div class="grid md:grid-cols-3 gap-6">
+
+                    <!-- 痛点一 → 建设一 -->
+                    <div class="bg-white rounded-2xl shadow-lg overflow-hidden card-hover transition-all duration-300">
+                        <div class="bg-red-800 text-white p-5">
+                            <div class="flex items-center gap-2 mb-2">
+                                <i class="fas fa-exclamation-circle text-amber-400"></i>
+                                <span class="text-xs tracking-widest text-red-200">痛点 01</span>
+                            </div>
+                            <h3 class="text-lg font-bold">文化传承断层</h3>
+                            <p class="text-red-100 text-sm mt-2 leading-relaxed">
+                                老一辈传承人年事渐高，口述记忆散落民间，缺乏系统记录。
+                            </p>
+                        </div>
+                        <div class="flex justify-center -mt-3 relative z-10">
+                            <div class="w-8 h-8 bg-amber-500 rounded-full flex items-center justify-center shadow-lg">
+                                <i class="fas fa-arrow-down text-white text-sm"></i>
+                            </div>
+                        </div>
+                        <div class="p-5 pt-6">
+                            <div class="flex items-center gap-2 mb-2">
+                                <i class="fas fa-archive text-amber-600"></i>
+                                <span class="text-xs tracking-widest text-amber-600">建设 01</span>
+                            </div>
+                            <h4 class="text-lg font-bold text-gray-800 mb-2">建口述史档案库</h4>
+                            <p class="text-gray-600 text-sm leading-relaxed">
+                                走访叠滘传承人，采集口述内容，整理成可检索、可保存的数字档案。
+                            </p>
+                        </div>
+                    </div>
+
+                    <!-- 痛点二 → 建设二 -->
+                    <div class="bg-white rounded-2xl shadow-lg overflow-hidden card-hover transition-all duration-300">
+                        <div class="bg-red-800 text-white p-5">
+                            <div class="flex items-center gap-2 mb-2">
+                                <i class="fas fa-exclamation-circle text-amber-400"></i>
+                                <span class="text-xs tracking-widest text-red-200">痛点 02</span>
+                            </div>
+                            <h3 class="text-lg font-bold">研学供给缺失</h3>
+                            <p class="text-red-100 text-sm mt-2 leading-relaxed">
+                                龙船文化进校园缺教材、缺课程，青少年难有系统了解。
+                            </p>
+                        </div>
+                        <div class="flex justify-center -mt-3 relative z-10">
+                            <div class="w-8 h-8 bg-amber-500 rounded-full flex items-center justify-center shadow-lg">
+                                <i class="fas fa-arrow-down text-white text-sm"></i>
+                            </div>
+                        </div>
+                        <div class="p-5 pt-6">
+                            <div class="flex items-center gap-2 mb-2">
+                                <i class="fas fa-book-open text-amber-600"></i>
+                                <span class="text-xs tracking-widest text-amber-600">建设 02</span>
+                            </div>
+                            <h4 class="text-lg font-bold text-gray-800 mb-2">做龙船文化课程</h4>
+                            <p class="text-gray-600 text-sm leading-relaxed">
+                                基于档案内容开发研学课程，让龙船文化走进课堂、走进社区。
+                            </p>
+                        </div>
+                    </div>
+
+                    <!-- 痛点三 → 建设三 -->
+                    <div class="bg-white rounded-2xl shadow-lg overflow-hidden card-hover transition-all duration-300">
+                        <div class="bg-red-800 text-white p-5">
+                            <div class="flex items-center gap-2 mb-2">
+                                <i class="fas fa-exclamation-circle text-amber-400"></i>
+                                <span class="text-xs tracking-widest text-red-200">痛点 03</span>
+                            </div>
+                            <h3 class="text-lg font-bold">青年传播乏力</h3>
+                            <p class="text-red-100 text-sm mt-2 leading-relaxed">
+                                传统表达方式对年轻人吸引力不足，文化传播渠道有限。
+                            </p>
+                        </div>
+                        <div class="flex justify-center -mt-3 relative z-10">
+                            <div class="w-8 h-8 bg-amber-500 rounded-full flex items-center justify-center shadow-lg">
+                                <i class="fas fa-arrow-down text-white text-sm"></i>
+                            </div>
+                        </div>
+                        <div class="p-5 pt-6">
+                            <div class="flex items-center gap-2 mb-2">
+                                <i class="fas fa-star text-amber-600"></i>
+                                <span class="text-xs tracking-widest text-amber-600">建设 03</span>
+                            </div>
+                            <h4 class="text-lg font-bold text-gray-800 mb-2">打造龙船文化 IP</h4>
+                            <p class="text-gray-600 text-sm leading-relaxed">
+                                用年轻人喜欢的方式讲龙船故事，形成可传播、可延续的文化 IP。
+                            </p>
+                        </div>
+                    </div>
+
+                </div>
+            </div>
+        </section>
+
+
+
+        <!-- 板块四：IP 小禅喵入口 -->
+        <section class="relative py-16 md:py-20 px-4 bg-gradient-to-b from-amber-50 to-amber-100">
+            <div class="max-w-4xl mx-auto">
+                <div class="bg-white rounded-3xl shadow-xl p-8 md:p-12">
+                    <div class="grid md:grid-cols-2 gap-8 items-center">
+                        <!-- 左：主形象 -->
+                        <div class="flex justify-center">
+                            <img src="images/ip/main.png" alt="小禅喵主形象"
+                                class="w-48 md:w-64 drop-shadow-xl">
+                        </div>
+                        <!-- 右：介绍 + 入口 -->
+                        <div class="text-center md:text-left">
+                            <p class="text-amber-600 text-sm tracking-[0.3em] mb-3">叠滘龙船文化 IP</p>
+                            <h2 class="text-2xl md:text-3xl font-bold text-red-800 mb-4">小禅喵</h2>
+                            <p class="text-gray-600 leading-loose mb-6">
+                                一只会讲龙船故事的小猫。它带着龙船纹样，用年轻人喜欢的方式，把叠滘老船工的口述记忆讲给更多人听。
+                            </p>
+                            <a href="ip.html"
+                            class="inline-flex items-center gap-2 px-6 py-3 bg-gradient-to-r from-red-700 to-red-800 text-white font-bold rounded-xl hover:from-red-800 hover:to-red-900 transition-all shadow-lg hover:shadow-xl">
+                                认识小禅喵
+                                <i class="fas fa-arrow-right"></i>
+                            </a>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </section>
+        
+
+        <!-- 板块五：口述史档案 -->
+        <section class="relative py-16 md:py-20 px-4 bg-gradient-to-b from-amber-50 to-amber-100">
+            <!-- 顶部过渡条 -->
+            <div class="absolute top-0 left-0 right-0 h-8 bg-gradient-to-b from-white to-transparent pointer-events-none"></div>
+
+            <div class="relative max-w-6xl mx-auto">
+                <!-- 板块标题 -->
+                <div class="text-center mb-12">
+                    <h2 class="text-2xl md:text-3xl font-bold text-red-800 mb-3">口述史档案</h2>
+                    <p class="text-amber-600 text-sm md:text-base tracking-[0.3em] mb-4">21 位受访者 · 6 类身份</p>
+                    <div class="flex items-center justify-center gap-4 mb-6">
+                        <div class="w-12 h-0.5 bg-gradient-to-r from-transparent to-amber-500"></div>
+                        <i class="fas fa-scroll text-amber-500"></i>
+                        <div class="w-12 h-0.5 bg-gradient-to-l from-transparent to-amber-500"></div>
+                    </div>
+                    <p class="text-gray-600 text-sm md:text-base max-w-2xl mx-auto leading-relaxed">
+                        走访叠滘龙船队员、教练、舵手、鼓手、社区工作者与本地居民，把他们的口述记忆整理成可检索、可查阅的数字档案。
+                    </p>
+                </div>
+
+                <!-- 身份类别入口 -->
+                <div class="flex flex-wrap justify-center gap-3 mb-10">
+                    <a href="search.html" class="px-5 py-2 bg-red-700 text-white rounded-full font-medium text-sm hover:bg-red-800 transition-all">
+                        全部档案
+                    </a>
+                    <a href="search.html?role=队员划手" class="px-5 py-2 bg-white text-gray-700 rounded-full font-medium text-sm border border-gray-200 hover:border-red-600 hover:text-red-700 transition-all">
+                        队员 / 划手
+                    </a>
+                    <a href="search.html?role=教练舵手鼓手" class="px-5 py-2 bg-white text-gray-700 rounded-full font-medium text-sm border border-gray-200 hover:border-red-600 hover:text-red-700 transition-all">
+                        教练 / 舵手 / 鼓手
+                    </a>
+                    <a href="search.html?role=管理与组织" class="px-5 py-2 bg-white text-gray-700 rounded-full font-medium text-sm border border-gray-200 hover:border-red-600 hover:text-red-700 transition-all">
+                        管理与组织
+                    </a>
+                    <a href="search.html?role=本地居民" class="px-5 py-2 bg-white text-gray-700 rounded-full font-medium text-sm border border-gray-200 hover:border-red-600 hover:text-red-700 transition-all">
+                        本地居民
+                    </a>
+                    <a href="search.html?role=从业者商户" class="px-5 py-2 bg-white text-gray-700 rounded-full font-medium text-sm border border-gray-200 hover:border-red-600 hover:text-red-700 transition-all">
+                        从业者 / 商户
+                    </a>
+                    <a href="search.html?role=家属外部视角" class="px-5 py-2 bg-white text-gray-700 rounded-full font-medium text-sm border border-gray-200 hover:border-red-600 hover:text-red-700 transition-all">
+                        家属 / 外部视角
+                    </a>
+                </div>
+
+                <!-- 最新档案卡片 -->
+                <div id="recentArchives" class="grid md:grid-cols-3 gap-6 mb-10">
+                    <!-- 由JS动态填充 -->
+                </div>
+
+                <!-- 查看全部 -->
+                <div class="text-center">
+                    <a href="search.html" class="inline-flex items-center gap-2 px-6 py-3 bg-gradient-to-r from-red-700 to-red-800 text-white font-bold rounded-xl hover:from-red-800 hover:to-red-900 transition-all shadow-lg hover:shadow-xl">
+                        查看全部档案
+                        <i class="fas fa-arrow-right"></i>
+                    </a>
+                </div>
+            </div>
+        </section>
+
+    <!-- 页脚 -->
+    <footer class="bg-gradient-to-r from-red-900 via-red-800 to-red-900 text-white py-12 px-4">
+        <div class="max-w-6xl mx-auto">
+            <div class="grid md:grid-cols-3 gap-8 mb-8">
+                <!-- 项目信息 -->
+                <div>
+                    <h4 class="text-xl font-bold mb-4 flex items-center">
+                        <i class="fas fa-ship text-amber-400 mr-2"></i>
+                        叠滘龙船文化
+                    </h4>
+                    <p class="text-red-200 text-sm leading-relaxed">
+                        叠滘龙船文化口述史档案库旨在保护和传承这一珍贵的非物质文化遗产，让龙船记忆代代相传。
+                    </p>
+                </div>
+
+                <!-- 快速链接 -->
+                <div>
+                    <h4 class="text-lg font-bold mb-4">快速链接</h4>
+                    <ul class="space-y-2 text-red-200">
+                        <li><a href="index.html" class="hover:text-amber-300 transition-colors"><i class="fas fa-home mr-2"></i>首页</a></li>
+                        <li><a href="search.html" class="hover:text-amber-300 transition-colors"><i class="fas fa-search mr-2"></i>档案搜索</a></li>
+                        <li><a href="admin.html" class="hover:text-amber-300 transition-colors"><i class="fas fa-cog mr-2"></i>后台管理</a></li>
+                    </ul>
+                </div>
+
+                <!-- 联系方式 -->
+                <div>
+                    <h4 class="text-lg font-bold mb-4">联系我们</h4>
+                    <p class="text-red-200 text-sm mb-2">
+                        <i class="fas fa-map-marker-alt mr-2 text-amber-400"></i>
+                        广东省佛山市南海区叠滘
+                    </p>
+                    <p class="text-red-200 text-sm">
+                        <i class="fas fa-envelope mr-2 text-amber-400"></i>
+                        diejiao_culture@example.com
+                    </p>
+                </div>
+            </div>
+
+            <!-- 分隔线 -->
+            <div class="border-t border-red-700 pt-6">
+                <div class="flex flex-col md:flex-row items-center justify-between gap-4">
+                    <p class="text-red-300 text-sm">
+                        © 2026 叠滘龙船文化口述史档案库 版权所有
+                    </p>
+                    <p class="text-red-300 text-sm flex items-center gap-2">
+                        <i class="fas fa-heart text-amber-400"></i>
+                        传承非遗 · 守护文化
+                    </p>
+                </div>
+            </div>
+        </div>
+    </footer>
+
+    <!-- JS脚本 -->
+    <script src="data.js"></script>
+    <script>
+        // 页面加载完成后执行
+        document.addEventListener('DOMContentLoaded', function() {
+            // 移动端菜单切换
+            const menuBtn = document.getElementById('menuBtn');
+            const mobileMenu = document.getElementById('mobileMenu');
+
+            menuBtn.addEventListener('click', function() {
+                mobileMenu.classList.toggle('show');
+                const icon = menuBtn.querySelector('i');
+                icon.classList.toggle('fa-bars');
+                icon.classList.toggle('fa-times');
+            });
+
+            // 加载最新档案
+            loadRecentArchives();
+        });
+
+        /**
+         * 加载最新档案卡片
+         */
+        function loadRecentArchives() {
+            const container = document.getElementById('recentArchives');
+            const archives = getAllArchives();
+
+            if (archives.length === 0) {
+                container.innerHTML = `
+                    <div class="col-span-3 text-center py-12">
+                        <i class="fas fa-inbox text-6xl text-gray-300 mb-4"></i>
+                        <p class="text-gray-500">暂无档案数据</p>
+                    </div>
+                `;
+                return;
+            }
+
+            // 只显示前3条
+            const recentArchives = archives.slice(0, 3);
+            container.innerHTML = recentArchives.map(archive => generateArchiveCard(archive)).join('');
+        }
+    </script>
+</body>
+</html>
